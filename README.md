@@ -2,13 +2,13 @@
 Questa è la repository dedicata ai files necessari per poter utilizzare Suzanne Bot sul proprio computer
 
 
-COME UTILIZZARE IL BOT?
-Step 1: Scarica VSCode - https://code.visualstudio.com/download
-Step 2: Scarica sul tuo computer i files chiamati bot.js, node_modules.zip, package-lock.json e package.json e mettili tutti nella stessa cartella
-step 3: Trascina e rilascia la cartella con tutti i file su VSCode.
-Step 4: Richiedi il token a @Peco#9825 su discord
-Step 5: Inserisci il token nella stringa    client.login("")    tra le due virgolette
-Step 6: clicca su run e inizia a testare il bot nel canale Bots del server
+COME UTILIZZARE IL BOT?<br/>
+Step 1: Scarica VSCode - https://code.visualstudio.com/download.<br/>
+Step 2: Scarica i files chiamati bot.js, node_modules.zip, package-lock.json e package.json e mettili tutti nella stessa cartella.<br/>
+step 3: Trascina e rilascia la cartella con tutti i file su VSCode.<br/>
+Step 4: Richiedi il token a @Peco#9825 su discord.<br/>
+Step 5: Inserisci il token nella stringa    client.login("")    tra le due virgolette.<br/>
+Step 6: clicca su run e inizia a testare il bot nel canale Bots del server.<br/>
 
 
 RICORDA
