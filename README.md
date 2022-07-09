@@ -19,6 +19,6 @@ La cartella commands contiene i comandi del bot in file separati l'uno dall'altr
 Ricordiamo anche che il codice è licenziato secondo la normativa creative commons, la puoi trovare nella repository o seguendo questo link: https://github.com/BlenderItaliaHub/Suzanne-Bot/blob/main/LICENSE
 
 IMPORTANTE<br/>
-Il testing di comandi ritenuti pericolosi dallo staff o che vanno contro le regole del server (https://discord.com/channels/816442399039422476/816445733481742346/879089505313882142) è severamente punito ed i responsabili saranno soggetti a gravi conseguenze. Il token del bot sarà riaggiornato e la sua distribuzione momentaneamente sospesa
+Il testing di comandi ritenuti pericolosi dallo staff o che vanno contro le regole del server (https://discord.com/channels/816442399039422476/816445733481742346/879089505313882142) è severamente punito ed i responsabili saranno soggetti a gravi conseguenze; il token del bot sarà riaggiornato e la sua distribuzione momentaneamente sospesa
 
 Per altre informazioni contattare @Peco#9825
