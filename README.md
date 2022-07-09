@@ -12,7 +12,7 @@ Step 6: clicca su run e inizia a testare il bot nel canale Bots del server.<br/>
 
 
 RICORDA<br/>
-Il file che contiene il codice del bot è bot.js, è l'unico che verrà modificato ed aggiornato ed è l'unico che sarà necessario riscaricare ogni volta che ne verrà pubblicato uno nuovo, gli altri (node_modules.zip, package-lock.json e package.json) sono solo files che servono a fare in modo che il bot funzioni e non è necessario riscaricarli ogni volta
+I file che contengono il codice del bot sono index.js e il file compresso commands, sono gli unici che verranno modificati ed aggiornati ed sono gli unici che sarà necessario riscaricare ogni volta che il codice ufficiale verrà aggiornato, gli altri (node_modules.zip, package-lock.json e package.json) sono solo files che servono a fare in modo che il bot funzioni e non è necessario riscaricarli ogni volta
 
 La cartella commands contiene i comandi del bot in file separati l'uno dall'altro, ogni comando è un file diverso, il codice principale che fa in modo di integrare quei file separati nel codice è index.js che sarebbe il codice del bot
 
