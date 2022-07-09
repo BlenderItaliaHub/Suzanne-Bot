@@ -3,11 +3,12 @@ Questa è la repository dedicata ai files necessari per poter utilizzare Suzanne
 
 
 COME UTILIZZARE IL BOT?<br/>
-Step 1: Scarica VSCode - https://code.visualstudio.com/download.<br/>
+Step 1: Scarica VSCode - https://code.visualstudio.com/download e Node.js - https://nodejs.org/it/download/ <br/>
 Step 2: Scarica i files chiamati index.js, node_modules.zip, package-lock.json, package.json e commands mettili tutti nella stessa cartella e decomprimi i files compressi.<br/>
 step 3: Trascina e rilascia la cartella con tutti i file su VSCode.<br/>
 Step 4: Richiedi il file .env a @Peco#9825 su discord e una volta ottenuto inseriscilo nella cartella.<br/>
-Step 5: clicca su run e inizia a testare il bot nel canale Bots del server.<br/>
+step 5 una volta scaricato e decompresso tutto, metto tutti i files in una sola cartella e averla aperta su VSCode scrivere nella console npm i discord.js dotenv
+Step 6: clicca su run e inizia a testare il bot nel canale Bots del server.<br/>
 
 
 RICORDA<br/>
