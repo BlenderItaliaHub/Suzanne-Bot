@@ -47,7 +47,7 @@ const rest = new REST({
 			if (err) console.log(err);
 		}
 	})();
-})
+});
 
 
 
@@ -66,7 +66,7 @@ for (const file of commandFiles) {
 	const command = require(path.join(commandsPath, file));
 	commands.push(command.data.toJSON());
 	client.commands.set(command.data.name, command);
-}
+};
 
 
 
