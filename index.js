@@ -47,7 +47,7 @@ const rest = new REST({
 			if (err) console.log(err);
 		}
 	})();
-})
+});
 
 
 
@@ -66,7 +66,7 @@ for (const file of commandFiles) {
 	const command = require(path.join(commandsPath, file));
 	commands.push(command.data.toJSON());
 	client.commands.set(command.data.name, command);
-}
+};
 
 
 
@@ -112,33 +112,53 @@ client.on('interactionCreate', async interaction => {
 	.setTimestamp() //Indispensabile
 	.setFooter({ text: 'Blender Italia Hub', iconURL: 'https://i.ibb.co/ck66Dbs/blender-logo.png' }); //Indispensabile */
 
-	if (interaction.commandName === 'screenshot') {
+	//ATTIVAZIONE COMANDO SCREENSHOT E SUBCOMMAND RELATIVI
+	switch (interaction.commandName === 'screenshot') {
         
-		if (interaction.options.getSubcommand() === 'viewport') {
+		case (interaction.options.getSubcommand() === 'viewport') :
 			await interaction.reply('https://drive.google.com/uc?id=1PJwQIjvRLK6q1f-4i57W3-6whCuM0YNe');
-	}  	else if (interaction.options.getSubcommand() === 'modeling') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'modeling') :
 			await interaction.reply('https://drive.google.com/uc?id=1SYPgG-IcNB9Ih0EKa3z4wq_89JxZoHxC');
-	}  	else if (interaction.options.getSubcommand() === 'sculpting') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'sculpting') :
 			await interaction.reply('https://drive.google.com/uc?id=10IdLfPMSo6TjtIQPu-pra4vB5dNRP6sS');
-	}  	else if (interaction.options.getSubcommand() === 'uv_editing') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'uv_editing') :
 			await interaction.reply('https://drive.google.com/uc?id=1QP5Bv5zSIEEAMq1Sn22vhHmwnUi-M4wE');
-	}  	else if (interaction.options.getSubcommand() === 'texture_paint') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'texture_paint') :
 			await interaction.reply('https://drive.google.com/uc?id=1PTCfnTuIoif4iljqSWYoIhJTiurV8Fvk');
-	}  	else if (interaction.options.getSubcommand() === 'shading') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'shading') :
 			await interaction.reply('https://drive.google.com/uc?id=1fhVDllM233ruFhNg-ftY-YqnTZKpg2AO');
-	}   else if (interaction.options.getSubcommand() === 'animation') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'animation') :
 			await interaction.reply('https://drive.google.com/uc?id=1k_ynEsHHLCr5Bt8yXtWPipam-gHhDnbk');
-	}  	else if (interaction.options.getSubcommand() === 'rendering') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'rendering') :
 			await interaction.reply('https://drive.google.com/uc?id=1-tCO4iu_qMnl08U_Tspaib80deCE3dK4');
-	}  	else if (interaction.options.getSubcommand() === 'compositing') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'compositing') :
 			await interaction.reply('https://drive.google.com/uc?id=149CuOmeVwV-VMMVUuDQ5-EzcbyHoKH-U');
-	}  	else if (interaction.options.getSubcommand() === 'geometry_nodes') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'geometry_nodes') :
 			await interaction.reply('https://drive.google.com/uc?id=1zY4pgFsXcrB-JwnFkHj9nT3PuMuoqATV');
-	}  	else if (interaction.options.getSubcommand() === 'scripting') {
+			break;
+
+		case (interaction.options.getSubcommand() === 'scripting') :
 			await interaction.reply('https://drive.google.com/uc?id=17ujUC5-vgnvysZ4vnS0uhNb0yfxx9ozN');
-	}  	
-		
-	}
+			break;
+	};
 
 
 
@@ -158,7 +178,7 @@ client.on('interactionCreate', async interaction => {
 			ephemeral: true
 		})
 	}
-})
+});
 
 
 
