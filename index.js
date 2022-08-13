@@ -6,6 +6,7 @@ const { Routes } = require('discord-api-types/v9');
 const { Client, Intents, Collection, Interaction, Message } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 
 
 const client = new Client({
@@ -70,13 +71,11 @@ for (const file of commandFiles) {
 
 const fixEmbed = new MessageEmbed()
 	.setColor('#0099ff')
-	.setTitle('title')
-	.setDescription('description')
-	.addFields(
-		{ name: 'title', value: 'value', inline: false },
-	);
-
-	//channel.send(fixEmbed);
+	.setTitle('Problemi Comuni')
+	.setDescription('Questo comando cercherà di risolvere i problemi che si possono incontrare facilmente su Blender e offrirà varie soluzioni.\n\n' +
+		'*Seleziona qua sotto il problema che vorresti risolvere.*\n\n ')
+	.setTimestamp()
+	.setFooter({ text: 'Suzanne Bot '});
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -174,7 +173,35 @@ client.on('interactionCreate', async interaction => {
 		switch (interaction.commandName === 'fix') {
 			
 			case (interaction.options.getSubcommand() === 'autosmooth') :
-				await interaction.reply({ embeds: [ fixEmbed ]});
+				const row = new MessageActionRow()
+					.addComponents(
+						new MessageSelectMenu()
+							.setCustomId('fixes')
+							.setPlaceholder('Seleziona il problema')
+							.addOptions([
+							{
+								label: 'Mesh non corretta',
+								description: 'La tua mesh presenta errori di shading',
+								value: 'first_option',
+							},
+							{
+								label: 'Glitch nella mesh',
+								description: 'La tua mesh presenta dei glitch di modellazione',
+								value: 'second_option',
+							},
+							{
+								label: 'Render non corretto',
+								description: 'Il render presenta degli strani artefatti',
+								value: 'third_option',
+							},
+							{
+								label: 'Bevel/extrude non corretti',
+								description: 'Il bevel o altri strumenti non funzionano come dovrebbero',
+								value: 'fourth_option',
+							},
+							])
+					);
+				await interaction.reply({ embeds: [ fixEmbed ], components: [ row ] });
 				break;
 
 		};
