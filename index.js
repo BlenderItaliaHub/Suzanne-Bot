@@ -6,7 +6,9 @@ const { Routes } = require('discord-api-types/v9');
 const { Client, Intents, Collection, Interaction, Message } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { MessageEmbed } = require('discord.js');
-const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
+const { embeds } = require('./elements/embeds.js');
+const { components } = require('./elements/components.js');
 
 
 const client = new Client({
@@ -69,13 +71,43 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 };
 
-const fixEmbed = new MessageEmbed()
+/*const fixEmbed = new MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('Problemi Comuni')
 	.setDescription('Questo comando cercherà di risolvere i problemi che si possono incontrare facilmente su Blender e offrirà varie soluzioni.\n\n' +
 		'*Seleziona qua sotto il problema che vorresti risolvere.*\n\n ')
 	.setTimestamp()
 	.setFooter({ text: 'Suzanne Bot '});
+
+const fixMenu = new MessageActionRow()
+	.addComponents(
+		new MessageSelectMenu()
+			.setCustomId('fixes')
+			.setPlaceholder('Seleziona il problema')
+			.addOptions([
+			{
+				label: 'Mesh non corretta',
+				description: 'La tua mesh presenta errori di shading',
+				value: 'first_option',
+			},
+			{
+				label: 'Glitch nella mesh',
+				description: 'La tua mesh presenta dei glitch di modellazione',
+				value: 'second_option',
+			},
+			{
+				label: 'Render non corretto',
+				description: 'Il render presenta degli strani artefatti',
+				value: 'third_option',
+			},
+			{
+				label: 'Bevel/extrude non corretti',
+				description: 'Il bevel o altri strumenti non funzionano come dovrebbero',
+				value: 'fourth_option',
+			},
+			])
+	);
+*/
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -118,94 +150,69 @@ client.on('interactionCreate', async interaction => {
 	.setImage('https://i.ibb.co/1Zn8Nq1/Schermata-2022-07-11-alle-03-47-13.png') //non indispensabile
 	.setTimestamp() //Indispensabile
 	.setFooter({ text: 'Blender Italia Hub', iconURL: 'https://i.ibb.co/ck66Dbs/blender-logo.png' }); //Indispensabile */
-	if (interaction.commandName === 'screenshot') {
-
+	switch (interaction.commandName) {
+		case ('screenshot') :
 		//ATTIVAZIONE COMANDO SCREENSHOT E SUBCOMMAND RELATIVI
-		switch (interaction.commandName === 'screenshot') {
-			
-			case (interaction.options.getSubcommand() === 'viewport') :
-				await interaction.reply('https://drive.google.com/uc?id=1PJwQIjvRLK6q1f-4i57W3-6whCuM0YNe');
-				break;
+			switch (interaction.options.getSubcommand()) {
+				
+				case ('viewport') :
+					await interaction.reply('https://drive.google.com/uc?id=1PJwQIjvRLK6q1f-4i57W3-6whCuM0YNe');
+					break;
 
-			case (interaction.options.getSubcommand() === 'modeling') :
-				await interaction.reply('https://drive.google.com/uc?id=1SYPgG-IcNB9Ih0EKa3z4wq_89JxZoHxC');
-				break;
+				case ('modeling') :
+					await interaction.reply('https://drive.google.com/uc?id=1SYPgG-IcNB9Ih0EKa3z4wq_89JxZoHxC');
+					break;
 
-			case (interaction.options.getSubcommand() === 'sculpting') :
-				await interaction.reply('https://drive.google.com/uc?id=10IdLfPMSo6TjtIQPu-pra4vB5dNRP6sS');
-				break;
+				case ('sculpting') :
+					await interaction.reply('https://drive.google.com/uc?id=10IdLfPMSo6TjtIQPu-pra4vB5dNRP6sS');
+					break;
 
-			case (interaction.options.getSubcommand() === 'uv_editing') :
-				await interaction.reply('https://drive.google.com/uc?id=1QP5Bv5zSIEEAMq1Sn22vhHmwnUi-M4wE');
-				break;
+				case ('uv_editing') :
+					await interaction.reply('https://drive.google.com/uc?id=1QP5Bv5zSIEEAMq1Sn22vhHmwnUi-M4wE');
+					break;
 
-			case (interaction.options.getSubcommand() === 'texture_paint') :
-				await interaction.reply('https://drive.google.com/uc?id=1PTCfnTuIoif4iljqSWYoIhJTiurV8Fvk');
-				break;
+				case ('texture_paint') :
+					await interaction.reply('https://drive.google.com/uc?id=1PTCfnTuIoif4iljqSWYoIhJTiurV8Fvk');
+					break;
 
-			case (interaction.options.getSubcommand() === 'shading') :
-				await interaction.reply('https://drive.google.com/uc?id=1fhVDllM233ruFhNg-ftY-YqnTZKpg2AO');
-				break;
+				case ('shading') :
+					await interaction.reply('https://drive.google.com/uc?id=1fhVDllM233ruFhNg-ftY-YqnTZKpg2AO');
+					break;
 
-			case (interaction.options.getSubcommand() === 'animation') :
-				await interaction.reply('https://drive.google.com/uc?id=1k_ynEsHHLCr5Bt8yXtWPipam-gHhDnbk');
-				break;
+				case ('animation') :
+					await interaction.reply('https://drive.google.com/uc?id=1k_ynEsHHLCr5Bt8yXtWPipam-gHhDnbk');
+					break;
 
-			case (interaction.options.getSubcommand() === 'rendering') :
-				await interaction.reply('https://drive.google.com/uc?id=1-tCO4iu_qMnl08U_Tspaib80deCE3dK4');
-				break;
+				case ('rendering') :
+					await interaction.reply('https://drive.google.com/uc?id=1-tCO4iu_qMnl08U_Tspaib80deCE3dK4');
+					break;
 
-			case (interaction.options.getSubcommand() === 'compositing') :
-				await interaction.reply('https://drive.google.com/uc?id=149CuOmeVwV-VMMVUuDQ5-EzcbyHoKH-U');
-				break;
+				case ('compositing') :
+					await interaction.reply('https://drive.google.com/uc?id=149CuOmeVwV-VMMVUuDQ5-EzcbyHoKH-U');
+					break;
 
-			case (interaction.options.getSubcommand() === 'geometry_nodes') :
-				await interaction.reply('https://drive.google.com/uc?id=1zY4pgFsXcrB-JwnFkHj9nT3PuMuoqATV');
-				break;
+				case ('geometry_nodes') :
+					await interaction.reply('https://drive.google.com/uc?id=1zY4pgFsXcrB-JwnFkHj9nT3PuMuoqATV');
+					break;
 
-			case (interaction.options.getSubcommand() === 'scripting') :
-				await interaction.reply('https://drive.google.com/uc?id=17ujUC5-vgnvysZ4vnS0uhNb0yfxx9ozN');
-				break;
-		};
-	} else if (interaction.commandName === 'fix') {
+				case ('scripting') :
+					await interaction.reply('https://drive.google.com/uc?id=17ujUC5-vgnvysZ4vnS0uhNb0yfxx9ozN');
+					break;
+			};
+			break;
 
-		//COMANDO FIX COMUNI
-		switch (interaction.commandName === 'fix') {
-			
-			case (interaction.options.getSubcommand() === 'autosmooth') :
-				const row = new MessageActionRow()
-					.addComponents(
-						new MessageSelectMenu()
-							.setCustomId('fixes')
-							.setPlaceholder('Seleziona il problema')
-							.addOptions([
-							{
-								label: 'Mesh non corretta',
-								description: 'La tua mesh presenta errori di shading',
-								value: 'first_option',
-							},
-							{
-								label: 'Glitch nella mesh',
-								description: 'La tua mesh presenta dei glitch di modellazione',
-								value: 'second_option',
-							},
-							{
-								label: 'Render non corretto',
-								description: 'Il render presenta degli strani artefatti',
-								value: 'third_option',
-							},
-							{
-								label: 'Bevel/extrude non corretti',
-								description: 'Il bevel o altri strumenti non funzionano come dovrebbero',
-								value: 'fourth_option',
-							},
-							])
-					);
-				await interaction.reply({ embeds: [ fixEmbed ], components: [ row ] });
-				break;
+		case ('fix') :
+			await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
+			break;
+			/*switch (interaction.options.getSubcommand()) {
+				
+				case ('autosmooth') :
+					await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
+					break;
 
-		};
-	} else {return false};
+			};
+			*/
+	};
 
 	//Error handler
 	const command = client.commands.get(interaction.commandName);
@@ -222,6 +229,39 @@ client.on('interactionCreate', async interaction => {
 			ephemeral: true
 		})
 	}
+});
+
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isSelectMenu()) return;
+
+	if (interaction.customId === 'fixes') {
+		
+		switch (interaction.values[0]) {
+			case ('first_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix1 ] });
+				break;
+
+			case ('second_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix2 ] });
+				break;
+			
+			case ('third_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix3 ] });
+				break;
+
+			case ('fourth_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [] });
+				break;
+		}
+	};
+});
+
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isButton()) return;
+	
+	if (interaction.customId === 'fixMenu') {
+		await interaction.update({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
+	};
 });
 
 

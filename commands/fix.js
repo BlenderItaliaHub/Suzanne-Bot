@@ -5,12 +5,7 @@ const {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fix')
-        .setDescription('Problemi comuni e come risolverli')
-
-        .addSubcommand(subcommand =>
-            subcommand
-            .setName('autosmooth')
-            .setDescription('Sistema alcune ombre sulle mesh')),
+        .setDescription('Problemi comuni e come risolverli'),
 
     async execute(interaction) {}
 }
