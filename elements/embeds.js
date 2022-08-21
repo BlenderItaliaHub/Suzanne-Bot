@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Message, ClientUser } = require('discord.js');
 
 const embeds = {
 
@@ -49,7 +49,7 @@ const embeds = {
     fix3 : 
         new MessageEmbed()
         .setColor('#ffffff')
-        .setTitle('Render non corretto')
+        .setTitle('Render bassa qualità o con glitch')
         .setDescription(
             '*Segui questi passaggi per risolvere il problema*\n\n' +
             'Se il render presenta un effetto pixel molto evidente o alcune parti sono leggermente distorte vuol dire che non è stato usato o è stato usato nel modo sbagliato il denoise.\n\n' +
@@ -79,6 +79,32 @@ const embeds = {
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=1rV3YwnCuUa9_WCSR11rkuoUmAaMGxDAR')
         .setFooter({ text: 'Suzanne Bot '}),
+
+    fix5 : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Lo zoom o la visuale non si muovono nel modo giusto')
+        .setDescription(
+            '*Segui questi passaggi per risolvere il problema*\n\n' +
+            'Su blender la visuale è sempre centrata rispetto ad un punto nella scena, se capita di dover fare delle modifiche in una zona della scena lontana da quel punto si potrebbe incorrere in alcune difficoltà ad utilizzare la visuale\n\n' +
+            "**Come risolvere l'errore**\n" + 
+            'Metodo 1 - Ricentrare la visuale\n' +
+            "Se state avendo problemi con lo zoom o la visuale potete selezionare l'oggetto su cui volete avere la visuale e poi premete il punto sul tastierino numerico oppure cliccate il pulsante view e poi frame selected.\n"
+        )
+        .setTimestamp()
+        .setImage('https://drive.google.com/uc?id=1cXaWh79BVdNUfU0ofO3DvLiH7iHn1kKd')
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    userFix :
+            new MessageEmbed()
+            .setColor('#ff4444')
+            .setTitle('Prova ad usare il comando /fix del nostro bot')
+            .setDescription(
+                'Ti ricordiamo che il nostro bot **Suzanne** ha un comando che **ti potrebbe aiutare a risolvere eventuali problemi su Blender**. Dagli una possibilità.\n\n' +
+                '*Per attivare il bot scrivi il comando* `/fix` *in questo canale o nel canale dei bot.*'
+            )
+            .setTimestamp()
+            .setFooter({ text: 'Suzanne Bot '}),
 }
 
 module.exports.embeds = embeds;
