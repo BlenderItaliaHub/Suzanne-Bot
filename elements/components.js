@@ -33,6 +33,11 @@ const components = {
 				description: 'Lo zoom non va oltre una certa distanza e la visuale mi sembra strana',
 				value: 'fifth_option',
 			},
+			{
+				label: 'Come installare le addon',
+				description: 'Mini guida per installare le addon',
+				value: 'sixth_option',
+			},
 			])
 	),
 
