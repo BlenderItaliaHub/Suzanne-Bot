@@ -257,6 +257,9 @@ client.on('interactionCreate', async interaction => {
 			case ('fifth_option') :
 				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix5 ] });
 				break;
+			
+			case ('sixth_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix6 ] });
 		}
 	};
 });

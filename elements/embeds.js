@@ -95,6 +95,24 @@ const embeds = {
         .setImage('https://drive.google.com/uc?id=1cXaWh79BVdNUfU0ofO3DvLiH7iHn1kKd')
         .setFooter({ text: 'Suzanne Bot '}),
 
+    fix6 : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Come installare le addon')
+        .setDescription(
+            '*Segui questi passaggi per risolvere il problema*\n\n' +
+            'Le addon sono utili per molti motivi: semplificano il workflow e aggiungono molte funzioni.\n\n' +
+            '**Come installare le addon**\n' +
+            "Il primo passo consiste nel scaricare l'addon desiderata, ovviamente accertandosi che sia compatibile con la versione di Blender utilizzata.\n" +
+            "Il file scaricato nella maggior parte dei casi sarà uno zip (nomefile.zip), a questo punto bisogna assicurarsi che all'interno del file zip non ci sia un altro file zip o una singola cartella, in questo caso dovrete estrarre il contenuto rifare lo zip.\n" +
+            "Dopo aver fatto questi accertamenti si può procedere all'installazione, aprite Blender, in alto a sinistra trovate il pulsante edit, premetelo e poi cliccate su preferences, si aprirà una piccola finestra, andate nella sezione add-ons e poi premete il tasto install, cercate il file zip dell'addon e installatelo.\n" + 
+            "Dopo qualche secondo la lista delle addon dovrebbe aggiornarsi con la nuova addon installata, non resta che attivarla cliccando sul quadrato di fianco al nome.\n\n" +
+            "In alcuni casi è possibile che durante l'installazione venga fuori un messaggio di errore o comunque l'addon non risulti nella lista, in questo caso consigliamo di contattare l'autore dell'addon."
+        )
+        .setTimestamp()
+        .setImage('https://drive.google.com/uc?id=13A7sgnZpDW9dbJeSWWBBulskxTjYa0mg')
+        .setFooter({ text: 'Suzanne Bot '}),
+
     userFix :
             new MessageEmbed()
             .setColor('#ff4444')
