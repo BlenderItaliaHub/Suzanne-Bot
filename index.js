@@ -205,14 +205,9 @@ client.on('interactionCreate', async interaction => {
 		case ('fix') :
 			await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
 			break;
-			/*switch (interaction.options.getSubcommand()) {
-				
-				case ('autosmooth') :
-					await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
-					break;
 
-			};
-			*/
+		case ('help') :
+			await interaction.reply({ embeds: [ embeds.helpEmbed ], components: [ ] })
 	};
 
 	//Error handler

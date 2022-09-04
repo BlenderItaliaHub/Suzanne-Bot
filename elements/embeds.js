@@ -8,7 +8,7 @@ const embeds = {
         .setTitle('Problemi Comuni')
         .setDescription('Questo comando cercherà di risolvere i problemi che si possono incontrare facilmente su Blender e offrirà varie soluzioni.\n\n**Seleziona qua sotto il problema che vorresti risolvere.**\n\n'+ '*Se non avete trovato quello che stavate cercando o avete altre soluzioni da aggiungere contattate lo staff tramite ticket. Grazie.*\n\n')
         .setTimestamp()
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     fix1 : 
         new MessageEmbed()
@@ -26,7 +26,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=1kwTGXPOj14pG-oT11j5yxMb8icbomBsJ')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
     
     fix2 : 
         new MessageEmbed()
@@ -44,7 +44,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=1g0Cf8tLZ9qujxHsoZTN7vQL30nPCSwDP')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     fix3 : 
         new MessageEmbed()
@@ -61,7 +61,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=11AhOGm6QqddN_lHpf9VnTp-biDtEx9Li')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     fix4 : 
         new MessageEmbed()
@@ -78,7 +78,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=1rV3YwnCuUa9_WCSR11rkuoUmAaMGxDAR')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     fix5 : 
         new MessageEmbed()
@@ -93,7 +93,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=1cXaWh79BVdNUfU0ofO3DvLiH7iHn1kKd')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     fix6 : 
         new MessageEmbed()
@@ -111,7 +111,7 @@ const embeds = {
         )
         .setTimestamp()
         .setImage('https://drive.google.com/uc?id=13A7sgnZpDW9dbJeSWWBBulskxTjYa0mg')
-        .setFooter({ text: 'Suzanne Bot '}),
+        .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 
     userFix :
             new MessageEmbed()
@@ -122,7 +122,27 @@ const embeds = {
                 '*Per attivare il bot scrivi il comando* `/fix` *in questo canale o nel canale dei bot.*'
             )
             .setTimestamp()
-            .setFooter({ text: 'Suzanne Bot '}),
+            .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
+
+    helpEmbed :
+            new MessageEmbed()
+            .setColor('#ea7700')
+            .setTitle('Help - Suzanne')
+            .setDescription(
+                'Suzanne è stato creato per aiutare tutti quelli che vogliono approcciarsi a Blender o già lo usano e vogliono migliorare.\n\n' +
+                'Offre comandi di utilità e aiuto che possono servire in qualunque momento. Seleziona qua sotto cosa guardare.\n' +
+                '\xa0\u200B \n\n'
+            )
+            .setThumbnail('https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF')
+	        .addFields(
+		        { name: '🖥\xa0 Funzionamento', value: 'Scopri come funziona il bot', inline: true },
+		        { name: '🛠\xa0 Comandi', value: 'Informazioni sui comandi disponibili', inline: true },
+                { name: 'ℹ\xa0 Materiali utili', value: '[Risorse utili per Blender](https://discord.com/channels/816442399039422476/1004384151329316994)', inline: true },
+                //{ name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: '\u200B', value: '\u200B', inline: false },
+	        )
+            .setTimestamp()
+            .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 }
 
 module.exports.embeds = embeds;
