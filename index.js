@@ -6,7 +6,7 @@ const { Routes } = require('discord-api-types/v9');
 const { Client, Intents, Collection, Interaction, Message } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { MessageEmbed } = require('discord.js');
-const { MessageActionRow, MessageSelectMenu, MessageButton, Modal } = require('discord.js');
+const { MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 
@@ -14,8 +14,7 @@ const { components } = require('./elements/components.js');
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.GUILD_MESSAGES,
-		Intents.FLAGS.GUILD_MESSAGE_TYPING
+		Intents.FLAGS.GUILD_MESSAGES
 	]
 });
 
@@ -151,8 +150,10 @@ client.on('interactionCreate', async interaction => {
 	.setImage('https://i.ibb.co/1Zn8Nq1/Schermata-2022-07-11-alle-03-47-13.png') //non indispensabile
 	.setTimestamp() //Indispensabile
 	.setFooter({ text: 'Blender Italia Hub', iconURL: 'https://i.ibb.co/ck66Dbs/blender-logo.png' }); //Indispensabile */
+	
+	
 	switch (interaction.commandName) {
-		case ('screenshot') :
+		case ('screen') :
 		//ATTIVAZIONE COMANDO SCREENSHOT E SUBCOMMAND RELATIVI
 			switch (interaction.options.getSubcommand()) {
 				
@@ -202,13 +203,68 @@ client.on('interactionCreate', async interaction => {
 			};
 			break;
 
+
 		case ('fix') :
 			await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
 			break;
-
-		case ('help') :
-			await interaction.reply({ embeds: [ embeds.helpEmbed ], components: [ ] })
+			
 	};
+	
+
+	switch (interaction.commandName) {
+		case ('modificatori_generate') :
+			
+			switch (interaction.options.getSubcommand()) {					
+					case ('definizione') :
+						await interaction.reply({ embeds: [ embeds.definizione]});
+						break;
+
+					case ('array') :
+						await interaction.reply({ embeds: [ embeds.array]});
+						break;
+
+					case ('bevel') :
+						await interaction.reply({ embeds: [ embeds.bevel]});
+						break;
+						
+					case ('boolean') :
+						await interaction.reply({ embeds: [ embeds.boolean]});
+						break;
+
+					case ('build') :
+						await interaction.reply({ embeds: [ embeds.build]});
+						break;
+
+					case ('decimate') :
+						await interaction.reply({ embeds: [ embeds.decimate]});
+						break;
+
+					case ('edge_split') :
+						await interaction.reply({ embeds: [ embeds.edge_split]});
+						break;
+
+					case ('geometry_nodes') :
+						await interaction.reply({ embeds: [ embeds.geometry_nodes]});
+						break;
+
+					case ('mask') :
+						await interaction.reply({ embeds: [ embeds.mask]});
+						break;
+						
+					case ('mirror') :
+						await interaction.reply({ embeds: [ embeds.mirror]});
+						break;
+
+					case ('subdivision_surface') :
+						await interaction.reply({ embeds: [ embeds.subdivision_surface]});
+						break;
+
+						
+
+	};	
+};
+
+
 
 	//Error handler
 	const command = client.commands.get(interaction.commandName);
@@ -246,15 +302,8 @@ client.on('interactionCreate', async interaction => {
 				break;
 
 			case ('fourth_option') :
-				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix4 ] });
+				await interaction.update({ components: [ components.btnFix ], embeds: [] });
 				break;
-
-			case ('fifth_option') :
-				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix5 ] });
-				break;
-			
-			case ('sixth_option') :
-				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix6 ] });
 		}
 	};
 });
@@ -264,19 +313,10 @@ client.on('interactionCreate', async interaction => {
 	
 	if (interaction.customId === 'fixMenu') {
 		await interaction.update({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
-	} else if (interaction.customId === 'ok') {
-		await interaction.message.delete();
-	}
-});
-
-client.on("messageCreate", async (message) => {
-	if ((message.author.bot) || (message.channel.parentId != '816443423212830781')) return;
-	const hasRole = message.member.roles.cache.some(role => role.name === '🤝 Helper Livello 01');
-	//console.log(message.channel.parentId)
-	if (!hasRole) {
-		await message.member.roles.add('880437139874148363');
-		await message.reply({ content: 'Ciao ' + message.author.username + '!', embeds: [ embeds.userFix ] });
 	};
 });
+
+
+
 
 client.login(process.env.TOKEN);
