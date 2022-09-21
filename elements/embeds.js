@@ -93,7 +93,7 @@ const embeds = {
         .setColor('#ffffff')
         .setTitle('Cosa sono i modificatori?')
         .setDescription('I modificatori sono operazioni automatiche che influiscono sulla geometria di un oggetto in maniera non distruttiva, questo significa che puoi effettuare tante operazioni di modellazione automaticamente senza cambiare la geometria di base del tuo oggetto\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/introduction.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=24)')
-        .setImage('https://i.ibb.co/5xPjLzh/Schermata-2022-09-19-alle-19-34-51.png')
+        .setImage('https://docs.blender.org/manual/en/latest/_images/modeling_modifiers_introduction_menu.png')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
 
@@ -137,7 +137,7 @@ const embeds = {
         new MessageEmbed()
         .setColor('#ffffff')
         .setTitle('Cosa fa il decimate modifier?')
-        .setDescription('Il decimate modifier ti permette di ridurre il numero di facce di un oggetto però cercando di mantenere la stessa forma il più possibile\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/decimate.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=91)')
+        .setDescription('Il decimate modifier ti permette di ridurre il numero di facce di un oggetto cercando di mantenere la stessa forma il più possibile\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/decimate.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=91)')
         .setImage('https://media.giphy.com/media/gDRsYTB9RQiV82sOgv/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
@@ -146,7 +146,7 @@ const embeds = {
         new MessageEmbed()
         .setColor('#ffffff')
         .setTitle('Cosa fa l\'edge split modifier?')
-        .setDescription('L\'edge split duplica alcuni o tutti gli spigoli di una mesh e rompe le connessioni intorno a quegli split edges, quando applicato questo ti permetterà di separare le facce l\'una dall\'altra\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/edge_split.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=99)')
+        .setDescription('L\'edge split duplica alcuni o tutti gli spigoli di una mesh e rompe le connessioni intorno a quegli split edges, quando applicato questo modificatore ti permetterà di separare le facce l\'una dall\'altra\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/edge_split.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=99)')
         .setImage('https://media.giphy.com/media/N8JgewayfMB4vsWYND/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
@@ -154,8 +154,8 @@ const embeds = {
     geometry_nodes : 
         new MessageEmbed()
         .setColor('#ffffff')
-        .setTitle('Cosa fa il geometry node modifier?')
-        .setDescription('Il geometry node modifier applica un node group che definisce la geometria di un oggetto, è chiamato per questo prcedural modeling o modellazione procedurale\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/geometry_nodes.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=111)')
+        .setTitle('Cosa fa il geometry nodes modifier?')
+        .setDescription('Il geometry nodes modifier applica un node group che definisce la geometria di un oggetto, questo tipo di modellazione è chiamata modellazione procedurale\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/geometry_nodes.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=111)')
         .setImage('https://media.giphy.com/media/bgBq7JqOv5FUQGVFZi/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
@@ -164,7 +164,7 @@ const embeds = {
         new MessageEmbed()
         .setColor('#ffffff')
         .setTitle('Cosa fa il mask modifier?')
-        .setDescription('Il mask modifier permette ai vertici di un oggetto di venire nascosti il base al vertex group assegnato a quell\'oggetto\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/mask.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=126)')
+        .setDescription('Il mask modifier permette ai vertici di un oggetto di venire nascosti in base al vertex group assegnato a quell\'oggetto\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/mask.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=126)')
         .setImage('https://media.giphy.com/media/NpkbyfbbjhWLsFmEOQ/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
@@ -182,12 +182,91 @@ const embeds = {
         new MessageEmbed()
         .setColor('#ffffff')
         .setTitle('Cosa fa il subdivision surface modifier?')
-        .setDescription('Il subdivision surface modifier divide le facce di una mesh in parti più piccole suddividendole e moltiplicandole permettendoti di creare delle geometrie più liscie e al contempo modellare un oggetto con pochi vertici fintanto che il modificatore non è applicato.\nAlti livelli di suddivisione significano una mesh più liscia e più suddivisa\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/subdivision_surface.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=156)')
+        .setDescription('Il subdivision surface modifier divide le facce di una mesh in parti più piccole suddividendole e moltiplicandole permettendoti di creare delle geometrie più liscie e al contempo modellare un oggetto con pochi vertici fintanto che il modificatore non è applicato.\nAlti livelli di suddivisione significano una mesh più liscia e più suddivisa\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/subdivision_surface.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=141)')
         .setImage('https://media.giphy.com/media/tKOAO5MrduraxSnaXN/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot '}),
 
-    
+    multiresolution : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il multiresolution modifier?')
+        .setDescription('Il multiresolution modifier ti permette di suddividere la mesh in modo simile al subdivision surface, ma ti dà anche la possibilità di modificare la nuova superficie suddivisa in sculpt mode\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/multiresolution.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=157)')
+        .setImage('https://media.giphy.com/media/WMifuiYvF9jZGMt9uz/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    remesh : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il remesh modifier?')
+        .setDescription('Il remesh modifier è un tool che permette di creare una nuova topologia che contiene solo quads, si può scegliere la dimensione di una faccia come 4 differenti modalità\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/remesh.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=167)')
+        .setImage('https://media.giphy.com/media/6QEjai1UIKXQh02Tc4/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    screw : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa lo screw modifier?')
+        .setDescription('Lo screw modifier prende il profilo di una mesh e lo usa per creare delle forme simili ad un elica, questo modificatore ci fornisce una lunga lista di opzioni per controllare l\'angolo, il numero degli offset per un singolo giro, numero di giri e tanto altro\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/screw.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=178)')
+        .setImage('https://media.giphy.com/media/70tdmiNdVKOySqxPvx/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    skin : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa lo skin modifier?')
+        .setDescription('Lo skin modifier usa i vertici e gli spigoli per creare dei "tubi" composti da 4 vertici, in edit mode puoi controllare lo spessore di ogni singolo vertice con l\'hotkey "A" (che è l\'abbreviazione da tastiera per il ridimensionamento di un vertice in questa modalità)\n\nDi solito questo modificatore è usato in combinazione con il subdivision surface per generare delle mesh base per la scultura\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/skin.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=192)')
+        .setImage('https://media.giphy.com/media/oT2CvACBuBPvScY2h7/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    solidify : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il solidify modifier?')
+        .setDescription('Il soldify modifier semplicemente prende la superfice di una mesh e gli aggiunge spessore\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/solidify.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=209)')
+        .setImage('https://media.giphy.com/media/UrwWEGPgymNxxyJmTZ/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    triangulate : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il triangulate modifier?')
+        .setDescription('Il triangulate modifier converte tutte le facce di una mesh quindi quads ed ngons in facce triangolari\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/triangulate.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=213)')
+        .setImage('https://media.giphy.com/media/QwU1SOzIob2GkKms1P/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}), 
+
+    volume_to_mesh : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il volume to mesh modifier?')
+        .setDescription('Il volume to mesh modifier ti permette di creare mesh da un volume object già esistente nella scena selezionandolo da una lista o con l\'eyedrop tool\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/volume_to_mesh.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=220)')
+        .setImage('https://media.giphy.com/media/K1trEplhcDanKFw2gg/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    weld : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il weld modifier?')
+        .setDescription('Il weld modifier cerca i gruppi di vertici entro una certa distanza l\'uno dall\'altro ed esegue un merge di questi, è molto utile quando alcuni vertici sono così vicini l\'un l\'altro da fare in modo che gli altri modificatori non lavorino nel modo corretto come il bevel modifier nel caso riportato nella gif quà sotto\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/weld.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=229)')
+        .setImage('https://media.giphy.com/media/zAwjb49uBzgFn4tPVX/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
+
+    wireframe : 
+        new MessageEmbed()
+        .setColor('#ffffff')
+        .setTitle('Cosa fa il wireframe modifier?')
+        .setDescription('Il wireframe modifier trasforma la mesh in un wireframe rendendo tutti gli spigoli dei solidi a quattro lati\n\n[• Docs](https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/wireframe.html)\n[• Video](https://youtu.be/idcFMhoSdIc?t=245)')
+        .setImage('https://media.giphy.com/media/Sx8FK4K7lQzbbP7jyd/giphy.gif')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot '}),
 
     
 
