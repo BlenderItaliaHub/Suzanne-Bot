@@ -212,7 +212,7 @@ client.on('interactionCreate', async interaction => {
 	
 
 	switch (interaction.commandName) {
-		case ('modificatori_generate') :
+		case ('modifier_gen') :
 			
 			switch (interaction.options.getSubcommand()) {					
 					case ('definizione') :
@@ -258,6 +258,42 @@ client.on('interactionCreate', async interaction => {
 					case ('subdivision_surface') :
 						await interaction.reply({ embeds: [ embeds.subdivision_surface]});
 						break;
+
+					case ('multiresolution') :
+						await interaction.reply({ embeds: [ embeds.multiresolution]});
+						break;
+
+					case ('remesh') :
+						await interaction.reply({ embeds: [ embeds.remesh]});
+						break;
+
+					case ('screw') :
+						await interaction.reply({ embeds: [ embeds.screw]});
+						break;
+
+					case ('skin') :
+						await interaction.reply({ embeds: [ embeds.skin]});
+						break;
+
+					case ('solidify') :
+						await interaction.reply({ embeds: [ embeds.solidify]});
+						break;
+
+					case ('triangulate') :
+						await interaction.reply({ embeds: [ embeds.triangulate]});
+						break;
+
+					case ('volume_to_mesh') :
+						await interaction.reply({ embeds: [ embeds.volume_to_mesh]});
+						break;
+
+					case ('weld') :
+						await interaction.reply({ embeds: [ embeds.weld]});
+						break;
+
+					case ('wireframe') :
+						await interaction.reply({ embeds: [ embeds.wireframe]});
+						break;	
 
 						
 
