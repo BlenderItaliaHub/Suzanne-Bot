@@ -1,10 +1,10 @@
-const { MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
+const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const components = {
     
-    fixMenu : new MessageActionRow()
+    fixMenu : new ActionRowBuilder()
 	.addComponents(
-		new MessageSelectMenu()
+		new SelectMenuBuilder()
 			.setCustomId('fixes')
 			.setPlaceholder('Seleziona il problema')
 			.addOptions([
@@ -41,21 +41,21 @@ const components = {
 			])
 	),
 
-    btnFix : new MessageActionRow()
+    btnFix : new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 					.setCustomId('fixMenu')
 					.setLabel('\xa0\xa0\xa0\xa0\xa0\xa0Indietro')
-					.setStyle('DANGER')
+					.setStyle(ButtonStyle.Danger)
 					.setEmoji('🔙')
 				),
 
-	ok : new MessageActionRow()
+	ok : new ActionRowBuilder()
 			.addComponents(
-				new MessageButton()
+				new ButtonBuilder()
 				.setCustomId('ok')
 				.setLabel('Ho capito')
-				.setStyle('SUCCESS')
+				.setStyle(ButtonStyle.Success)
 			)
 };
 
