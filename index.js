@@ -3,20 +3,15 @@ require("dotenv").config();
 const fs = require('fs')
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Intents, Collection, Interaction, Message } = require('discord.js');
+const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits } = require('discord.js');
 const { channel } = require("diagnostics_channel");
-const { MessageEmbed } = require('discord.js');
-const { MessageActionRow, MessageSelectMenu, MessageButton } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
+const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 
 
-const client = new Client({
-	intents: [
-		Intents.FLAGS.GUILDS,
-		Intents.FLAGS.GUILD_MESSAGES
-	]
-});
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 
 
@@ -153,7 +148,7 @@ client.on('interactionCreate', async interaction => {
 	
 	
 	switch (interaction.commandName) {
-		case ('screen') :
+		case ('screenshot') :
 		//ATTIVAZIONE COMANDO SCREENSHOT E SUBCOMMAND RELATIVI
 			switch (interaction.options.getSubcommand()) {
 				
@@ -206,6 +201,10 @@ client.on('interactionCreate', async interaction => {
 
 		case ('fix') :
 			await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
+			break;
+
+		case ('help') :
+			await interaction.reply({ embeds: [ embeds.helpEmbed ], components: [ ] });
 			break;
 			
 	};
@@ -338,8 +337,15 @@ client.on('interactionCreate', async interaction => {
 				break;
 
 			case ('fourth_option') :
-				await interaction.update({ components: [ components.btnFix ], embeds: [] });
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix4 ] });
 				break;
+
+			case ('fifth_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix5 ] });
+				break;
+			
+			case ('sixth_option') :
+				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix6 ] });
 		}
 	};
 });
@@ -349,10 +355,19 @@ client.on('interactionCreate', async interaction => {
 	
 	if (interaction.customId === 'fixMenu') {
 		await interaction.update({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
-	};
+	} else if (interaction.customId === 'ok') {
+		await interaction.message.delete();
+	}
 });
 
-
-
+client.on("messageCreate", async (message) => {
+	if ((message.author.bot) || (message.channel.parentId != '816443423212830781')) return;
+	const hasRole = message.member.roles.cache.some(role => role.name === '🤝 Helper Livello 01');
+	//console.log(message.channel.parentId)
+	if (!hasRole) {
+		await message.member.roles.add('880437139874148363');
+		await message.reply({ content: 'Ciao ' + message.author.username + '!', embeds: [ embeds.userFix ] });
+	};
+});
 
 client.login(process.env.TOKEN);
