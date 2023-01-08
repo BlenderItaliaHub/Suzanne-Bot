@@ -325,6 +325,13 @@ const embeds = {
         .setImage('https://media.giphy.com/media/Sx8FK4K7lQzbbP7jyd/giphy.gif')
         .setTimestamp()
         .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
+
+    chatGPT : 
+        new EmbedBuilder()
+        .setColor('#ffffff')
+        .setTitle('Risposta di ChatGPT')
+        .setTimestamp()
+        .setFooter({ text: 'Suzanne Bot\n Le risposte di chatGPt potrebbero essere non corrette, ci scusiamo per il disagio', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
 }
 
 module.exports.embeds = embeds;
