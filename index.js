@@ -141,14 +141,20 @@ client.on('interactionCreate', async interaction => {
 
 		case ('ask') : 
 			async function asyncCall() {
+			 try {
 				const response = await openai.createCompletion({
 				model: "text-davinci-003",
 				prompt: interaction.options._hoistedOptions[0].value,
 				max_tokens: 1024,
 				temperature: 0,
 				});
-				
+		
+			
 				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value + "\n\n" + "```" + response.data.choices[0].text + "```")] });
+			} catch (error) {
+				console.log(error);
+				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!\n```chatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```")] });
+			}
 			}
 			await interaction.deferReply({ content: "La risposta è in caricamento" });
 			asyncCall();
