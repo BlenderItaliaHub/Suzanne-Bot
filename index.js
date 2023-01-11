@@ -154,7 +154,7 @@ client.on('interactionCreate', async interaction => {
 				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value + "\n\n" + "```" + response.data.choices[0].text + "```")] });
 			} catch (error) {
 				console.error(error);
-				var textError = error.response.data.error.message;
+				var textError = (error.response.data != undefined ? error.response.data.error.message : error.message);
 				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!```\nchatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```\n```ansi\n[2;36m# Errore:[0m\n[2;33m[2;31m[2;33m[2;35m[2;33m" + textError + "[0m[2;35m[0m[2;33m[0m[2;31m[0m[2;33m[0m\n```")] });
 			}
 			}
