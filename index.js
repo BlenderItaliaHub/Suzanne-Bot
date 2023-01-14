@@ -147,11 +147,11 @@ client.on('interactionCreate', async interaction => {
 				model: "text-davinci-003",
 				prompt: interaction.options._hoistedOptions[0].value,
 				max_tokens: 1024,
-				temperature: 0,
+				temperature: 0.3,
 				});
 		
 			
-				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value + "\n\n" + "```" + response.data.choices[0].text + "```")] });
+				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "\n\n" + "```" + response.data.choices[0].text.replace(/```/g, "\n") + "```")] });
 			} catch (error) {
 				console.error(error);
 				var textError = (error.response != undefined ? error.response.data.error.message : error.message);
