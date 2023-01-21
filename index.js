@@ -222,9 +222,13 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
+var user = [];
+
 client.on("messageCreate", async (message) => {
 
 	if ((message.author.bot) || (message.channel.parentId != '816443423212830781')) return;
+	if (user.includes(message.author.id)) return;
+	user.push(message.author.id);
 	const hasRole = message.member.roles.cache.some(role => role.name === '🤝 Helper Livello 01');
 	//console.log(message.channel.parentId)
 	if (!hasRole) {
