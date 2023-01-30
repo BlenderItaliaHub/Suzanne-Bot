@@ -210,14 +210,21 @@ client.on('interactionCreate', async interaction => {
 
 client.on('presenceUpdate', (oldPresence, newPresence) => {
 	var guild = newPresence.guild;
-	console.log(guild);
 
 	if (guild.id === "816442399039422476") {
-		var user = newPresence.member;
-		var activity = newPresence.activities[0];
-		console.log(newPresence);
 
-		if (activity === "Blender") {
+		var activity = newPresence.activities;
+		var blender = false;
+
+		activity.forEach(function(status) {
+			if (status.name === "Blender") {
+				blender = true;
+			};
+		});
+
+		var user = newPresence.member;
+
+		if (blender) {
 			user.roles.add('1063931326278946846');
 		} else {
 			if (user.roles.cache.some(role => role.name === 'Blender')) {
