@@ -20,17 +20,13 @@ const client = new Client({ intents: [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildBans,
 	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.MessageContent,] 
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildPresences,
+] 
 });
-
-
-
 
 client.once("ready", () =>{
 	console.log("Suzanne Ready!");
-
-
-
 
 const CLIENT_ID = client.user.id;
 const rest = new REST({
@@ -209,6 +205,25 @@ client.on('interactionCreate', async interaction => {
 			case ('sixth_option') :
 				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix6 ] });
 		}
+	};
+});
+
+client.on('presenceUpdate', (oldPresence, newPresence) => {
+	var guild = newPresence.guild;
+	console.log(guild);
+
+	if (guild.id === "816442399039422476") {
+		var user = newPresence.member;
+		var activity = newPresence.activities[0];
+		console.log(newPresence);
+
+		if (activity === "Blender") {
+			user.roles.add('1063931326278946846');
+		} else {
+			if (user.roles.cache.some(role => role.name === 'Blender')) {
+				user.roles.remove('1063931326278946846');
+			};
+		};
 	};
 });
 
