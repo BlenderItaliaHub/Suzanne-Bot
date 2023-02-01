@@ -224,19 +224,15 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
 					blender = true;
 				};
 			});
-			
+
 		} else {
-			if (user.roles.cache.some(role => role.name === 'Blender')) {
-				user.roles.remove('1063931326278946846');
-			};
+			user.roles.remove('1063931326278946846');
 		};
 
 		if (blender) {
 			user.roles.add('1063931326278946846');
 		} else {
-			if (user.roles.cache.some(role => role.name === 'Blender')) {
-				user.roles.remove('1063931326278946846');
-			};
+			user.roles.remove('1063931326278946846');
 		};
 	};
 });
