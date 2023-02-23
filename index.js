@@ -23,15 +23,13 @@ const client = new Client({ intents: [
 	GatewayIntentBits.GuildBans,
 	GatewayIntentBits.GuildMessages,
 	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildPresences,
 	GatewayIntentBits.GuildVoiceStates,
 ] 
 });
 
 client.once("ready", () =>{
 	console.log("Suzanne Ready!");
-
-
-
 
 const CLIENT_ID = client.user.id;
 const rest = new REST({
@@ -290,6 +288,35 @@ client.on('interactionCreate', async interaction => {
 			case ('sixth_option') :
 				await interaction.update({ components: [ components.btnFix ], embeds: [ embeds.fix6 ] });
 		}
+	};
+});
+
+client.on('presenceUpdate', (oldPresence, newPresence) => {
+	var guild = newPresence.guild;
+	var user = newPresence.member;
+
+	if (guild.id === "816442399039422476") {
+
+		var activity = newPresence.activities;
+		var blender = false;
+
+		if (activity.length > 0) {
+
+			activity.forEach(function(status) {
+				if (status.name === "Blender") {
+					blender = true;
+				};
+			});
+
+		} else {
+			user.roles.remove('1063931326278946846');
+		};
+
+		if (blender) {
+			user.roles.add('1063931326278946846');
+		} else {
+			user.roles.remove('1063931326278946846');
+		};
 	};
 });
 
