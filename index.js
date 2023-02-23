@@ -10,6 +10,8 @@ const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = requ
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 const { Configuration, OpenAIApi } = require("openai");
+const { Player, QueryType } = require("discord-player");
+
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
 });
@@ -20,11 +22,10 @@ const client = new Client({ intents: [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildBans,
 	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.MessageContent,] 
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildVoiceStates,
+] 
 });
-
-
-
 
 client.once("ready", () =>{
 	console.log("Suzanne Ready!");
@@ -76,10 +77,90 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 };
 
+// MUSIC PLAYER
+client.player = new Player(client, {
+	ytdlOptions: {
+		quality: "highestaudio",
+		highWaterMark: 1 << 25
+	}
+})
+
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 	
 	switch (interaction.commandName) {
+		case ('play'):
+			await interaction.deferReply();
+			if (!interaction.member.voice.channel) {
+				return interaction.editReply("Devi essere in un canale vocale per usare questo comando")
+			}
+
+			const queue = await client.player.createQueue(interaction.guild)
+			if (!queue.connection) await queue.connect(interaction.member.voice.channel)
+
+			let embed = new EmbedBuilder()
+
+			if (interaction.options.getSubcommand() == "canzone") {
+				let url = interaction.options.getString("link")
+				const result = await client.player.search(url, {
+					requestedBy: interaction.user,
+					searchEngine: QueryType.YOUTUBE_VIDEO
+				})
+				if (result.tracks.length === 0) {
+					return interaction.editReply("Nessun risultato")
+				}
+				const song = result.tracks[0];
+				await queue.addTrack(song);
+				console.log("canzone aggiunta");
+				embed
+					.setDescription("**[" + song.title + "](" + song.url + ")** è stata aggiunta alla coda")
+					.setThumbnail(song.thumbnail)
+					.setFooter({ text: "Durata: " + song.duration});
+
+			} else if (interaction.options.getSubcommand() == "playlist") {
+				let url = interaction.options.getString("link")
+				const result = await client.player.search(url, {
+					requestedBy: interaction.user,
+					searchEngine: QueryType.YOUTUBE_PLAYLIST
+				})
+				if (result.tracks.length === 0) {
+					return interaction.editReply("Nessun risultato")
+				}
+				const playlist = result.playlist;
+				await queue.addTracks(result.tracks);
+				console.log("playlist aggiunta");
+				embed
+					.setDescription("**" + result.tracks.length + "** canzoni da **[" + playlist.title + "](" + playlist.url + ")** sono state aggiunte alla coda")
+					.setThumbnail(result.tracks[0].thumbnail)
+					.setFooter({ text: "Canzoni: " + playlist.tracks.length });
+				
+			} else if (interaction.options.getSubcommand() == "cerca") {
+				let url = interaction.options.getString("nome")
+				const result = await client.player.search(url, {
+					requestedBy: interaction.user,
+					searchEngine: QueryType.AUTO
+				})
+				if (result.tracks.length === 0) {
+					return interaction.editReply("Nessun risultato")
+				}
+				const song = result.tracks[0];
+				await queue.addTrack(song);
+				console.log("canzone aggiunta");
+				embed
+					.setDescription("**[" + song.title + "](" + song.url + ")** è stata aggiunta alla coda")
+					.setThumbnail(song.thumbnail)
+					.setFooter({ text: "Durata: " + song.duration });
+
+			}
+
+			if (!queue.playing) await queue.play()
+			
+			await interaction.editReply({
+				embeds: [embed]
+			})
+
+			break;
+
 		case ('screenshot') :
 		//ATTIVAZIONE COMANDO SCREENSHOT E SUBCOMMAND RELATIVI
 			switch (interaction.options.getSubcommand()) {
