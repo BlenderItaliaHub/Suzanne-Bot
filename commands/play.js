@@ -8,11 +8,11 @@ module.exports = {
         .addSubcommand((subcommand)=>
             subcommand
             .setName("canzone")
-            .setDescription("Carica una singola canzone da un link")
+            .setDescription("Carica una singola canzone")
             .addStringOption(option =>
                 option
-                    .setName('link')
-                    .setDescription('Link canzone')
+                    .setName('canzone')
+                    .setDescription('Nome o link canzone')
                     .setRequired(true)
             )
         )
@@ -24,17 +24,6 @@ module.exports = {
                 option
                     .setName('link')
                     .setDescription('Link playlist')
-                    .setRequired(true)
-            )
-        )
-        .addSubcommand((subcommand)=>
-            subcommand
-            .setName("cerca")
-            .setDescription("Cerca canzone in base al nome")
-            .addStringOption(option =>
-                option
-                    .setName('nome')
-                    .setDescription('Nome canzone')
                     .setRequired(true)
             )
         ),

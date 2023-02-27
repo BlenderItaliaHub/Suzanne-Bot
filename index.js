@@ -3,7 +3,7 @@ require("dotenv").config();
 const fs = require('fs')
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits } = require('discord.js');
+const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits, InteractionCollector, Embed } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { EmbedBuilder } = require('discord.js');
 const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -93,27 +93,26 @@ client.on('interactionCreate', async interaction => {
 				return interaction.editReply("Devi essere in un canale vocale per usare questo comando")
 			}
 
-			const queue = await client.player.createQueue(interaction.guild)
+			var queue = await client.player.createQueue(interaction.guildId)
 			if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
 			let embed = new EmbedBuilder()
 
 			if (interaction.options.getSubcommand() == "canzone") {
-				let url = interaction.options.getString("link")
+				let url = interaction.options.getString("canzone")
 				const result = await client.player.search(url, {
 					requestedBy: interaction.user,
-					searchEngine: QueryType.YOUTUBE_VIDEO
+					searchEngine: QueryType.AUTO
 				})
 				if (result.tracks.length === 0) {
 					return interaction.editReply("Nessun risultato")
 				}
 				const song = result.tracks[0];
 				await queue.addTrack(song);
-				console.log("canzone aggiunta");
 				embed
 					.setDescription("**[" + song.title + "](" + song.url + ")** è stata aggiunta alla coda")
 					.setThumbnail(song.thumbnail)
-					.setFooter({ text: "Durata: " + song.duration});
+					.setFooter({ text: "Durata: " + song.duration });
 
 			} else if (interaction.options.getSubcommand() == "playlist") {
 				let url = interaction.options.getString("link")
@@ -126,29 +125,11 @@ client.on('interactionCreate', async interaction => {
 				}
 				const playlist = result.playlist;
 				await queue.addTracks(result.tracks);
-				console.log("playlist aggiunta");
 				embed
 					.setDescription("**" + result.tracks.length + "** canzoni da **[" + playlist.title + "](" + playlist.url + ")** sono state aggiunte alla coda")
 					.setThumbnail(result.tracks[0].thumbnail)
 					.setFooter({ text: "Canzoni: " + playlist.tracks.length });
 				
-			} else if (interaction.options.getSubcommand() == "cerca") {
-				let url = interaction.options.getString("nome")
-				const result = await client.player.search(url, {
-					requestedBy: interaction.user,
-					searchEngine: QueryType.AUTO
-				})
-				if (result.tracks.length === 0) {
-					return interaction.editReply("Nessun risultato")
-				}
-				const song = result.tracks[0];
-				await queue.addTrack(song);
-				console.log("canzone aggiunta");
-				embed
-					.setDescription("**[" + song.title + "](" + song.url + ")** è stata aggiunta alla coda")
-					.setThumbnail(song.thumbnail)
-					.setFooter({ text: "Durata: " + song.duration });
-
 			}
 
 			if (!queue.playing) await queue.play()
@@ -157,6 +138,143 @@ client.on('interactionCreate', async interaction => {
 				embeds: [embed]
 			})
 
+			break;
+
+		case ("queue"): 
+			await interaction.deferReply();
+			
+			var queue = await client.player.getQueue(interaction.guildId);
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+
+			const totalPages = Math.ceil(queue.tracks.length / 10) || 1;
+			const page = (interaction.options._hoistedOptions[0] != undefined ? interaction.options._hoistedOptions[0].value : 1) - 1;
+			
+
+			if ((page + 1) > totalPages) {
+				return await interaction.editReply("Pagina non valida. C'è solo un massimo di " + totalPages + " pagine")
+			}
+
+			const queueString = queue.tracks.slice(page * 10, page * 10 + 10).map((song, i) => {
+				return "**" + (page * 10 + i + 1) + ".** `" + song.duration + "` " + song.title + " -- <@" + song.requestedBy.id + ">"
+			}).join ("\n")
+
+			var currentSong = queue.current;
+			await interaction.editReply({
+				embeds: [
+					new EmbedBuilder()
+						.setDescription("**Attualmente in riproduzione**\n" + (currentSong ? "`" + currentSong.duration + "` " + currentSong.title + " -- <@" + currentSong.requestedBy.id + ">" : "Nessuna canzone in riproduzione") + 
+						(queueString != "" ? "\n\n**Attualmente in coda**\n" + queueString : ""))
+						.setFooter({
+							text: (queueString.length > 0 ? "Pagina " + (page + 1) + " di " + totalPages : "Canzone in riproduzione")
+						})
+						.setThumbnail(currentSong.thumbnail)
+				]
+			})
+
+			break;
+
+		case ("quit") :
+			await interaction.deferReply();
+
+			var queue = await client.player.getQueue(interaction.guildId);
+
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+
+			queue.destroy();
+			await interaction.editReply("A presto!");
+
+			break;
+
+		case ("shuffle") :
+			await interaction.deferReply();
+	
+			var queue = await client.player.getQueue(interaction.guildId);
+	
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+	
+			queue.shuffle();
+			await interaction.editReply("La coda di " + queue.tracks.length + " canzoni è stata cambiata");
+	
+			break;
+
+		case ("info") :
+			await interaction.deferReply();
+		
+			var queue = await client.player.getQueue(interaction.guildId);
+		
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+		
+			let bar = queue.createProgressBar({
+				queue: false,
+				length: 19
+			})
+
+			var song = queue.current;
+
+			await interaction.editReply({
+				embeds: [new EmbedBuilder()
+					.setThumbnail(song.thumbnail)
+					.setDescription("Attualmente in riproduzione [" + song.title + "](" + song.url + ")\n\n" + bar)]
+			});
+		
+			break;
+
+		case ("pause") :
+			await interaction.deferReply();
+	
+			var queue = await client.player.getQueue(interaction.guildId);
+	
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+	
+			queue.setPaused(true);
+			await interaction.editReply("La musica è stata messa in pausa. Usa il comando `/resume` per riprendere la musica");
+	
+			break;
+
+		case ("resume") :
+			await interaction.deferReply();
+	
+			var queue = await client.player.getQueue(interaction.guildId);
+	
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+	
+			queue.setPaused(false);
+			await interaction.editReply("La musica è stata ripresa. Usa il comando per `/pause` per metterla in pausa");
+	
+			break;
+
+		case ("skip") :
+			await interaction.deferReply();
+	
+			var queue = await client.player.getQueue(interaction.guildId);
+	
+			if (queue == undefined) {
+				return await interaction.editReply("Non ci sono canzoni in coda")
+			}
+
+			var currentSong = queue.current;
+	
+			queue.skip();
+			await interaction.editReply({
+				embeds: [
+					new EmbedBuilder()
+						.setDescription(currentSong.title + " è stata saltata")
+						.setThumbnail(currentSong.thumbnail)
+				]
+			});
+	
 			break;
 
 		case ('screenshot') :
