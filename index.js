@@ -339,23 +339,46 @@ client.on('interactionCreate', async interaction => {
 		case ('ask') : 
 			var response;
 			async function asyncCall() {
-			 try {
-				response = await openai.createCompletion({
-				model: "text-davinci-003",
-				prompt: interaction.options._hoistedOptions[0].value,
-				max_tokens: 1024,
-				temperature: 0.3,
-				});
-		
+				try {
+					response = await openai.createChatCompletion({
+					model: "gpt-3.5-turbo",
+					messages: [
+						{role: "system", content: "Ciao, ti chiami Suzanne e sei un assistente digitale molto gentile, ultra professionale e di ultima generazione specifico per il programma Blender e in generale per tutto l'ambito artistico 3D, hai ottime conoscenze teoriche e pratiche di Blender e altri programmi artistici, ti sarà fatta qualche domanda che potrebbe riguardare il programma o altro del mondo 3d e te dovrai rispondere nel modo più accurato e chiaro possibile, inoltre se necessario potrai anche inviare link per delle risorse, video o altri link utili, ma solo nel caso in cui vengano richieste o potrebbero servire. La struttura per l'invio dei link deve essere esattamente questa, anche con le parentesi, prima del link tra parentesi tonde ci deve essere il nome del sito tra parentesi quadre e non ci devono essere spazi tra il testo e il link, eccoti un esempio di come deve essere un link: [**nomesito**](linksito), te devi solo sostituire nomesito con il nome del sito e linksito con il link del sito."},
+						{role: "user", content: interaction.options._hoistedOptions[0].value}
+					],
+					max_tokens: 1024,
+					temperature: 0.7,
+					});
+					var linkRegEx = /https?:\/\/\S+[^\s)]/g;
+					var linkArray = response.data.choices[0].message.content.match(linkRegEx);
+					var linkString;
+					if	(linkArray != null) linkString = linkArray.join("\n");
+					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "\n\n" + (linkArray != null ? "" : "```") + response.data.choices[0].message.content.replace(/```/g, "\n")/*.replace(linkRegEx, "")*/ + (linkArray != null ? "" : "```")/* + (linkString != undefined ? linkString : "")*/)] });
+				} catch (error) {
+					console.error(error);
+					var textError = (error.response != undefined ? error.response.data.error.message : error.message);
+					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!```\nchatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```\n```ansi\n[2;36m# Errore:[0m\n[2;33m[2;31m[2;33m[2;35m[2;33m" + textError + "[0m[2;35m[0m[2;33m[0m[2;31m[0m[2;33m[0m\n```")] });
+				}
+			}
+
+			/*async function asyncCall() {
+				try {
+					response = await openai.createCompletion({
+					model: "text-davinci-003",
+					prompt: interaction.options._hoistedOptions[0].value,
+					max_tokens: 1024,
+					temperature: 0.7,
+					});
 			
-				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "\n\n" + "```" + response.data.choices[0].text.replace(/```/g, "\n") + "```")] });
-			} catch (error) {
-				console.error(error);
-				var textError = (error.response != undefined ? error.response.data.error.message : error.message);
-				interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!```\nchatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```\n```ansi\n[2;36m# Errore:[0m\n[2;33m[2;31m[2;33m[2;35m[2;33m" + textError + "[0m[2;35m[0m[2;33m[0m[2;31m[0m[2;33m[0m\n```")] });
-			}
-			}
-			await interaction.deferReply({ content: "La risposta è in caricamento" });
+				
+					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "\n\n" + "```" + response.data.choices[0].text.replace(/```/g, "\n") + "```")] });
+				} catch (error) {
+					console.error(error);
+					var textError = (error.response != undefined ? error.response.data.error.message : error.message);
+					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!```\nchatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```\n```ansi\n[2;36m# Errore:[0m\n[2;33m[2;31m[2;33m[2;35m[2;33m" + textError + "[0m[2;35m[0m[2;33m[0m[2;31m[0m[2;33m[0m\n```")] });
+				}
+			}*/
+			await interaction.deferReply();
 			asyncCall();
 			break;
 };
