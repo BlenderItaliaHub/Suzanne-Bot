@@ -85,12 +85,14 @@ client.player = new Player(client, {
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
+
+	if (interaction.guild === null) console.log(interaction.user.username + " ha usato il comando: " + interaction.commandName + " nei DM")
 	
 	switch (interaction.commandName) {
 		case ('play'):
 			await interaction.deferReply();
-			if (!interaction.member.voice.channel) {
-				return interaction.editReply("Devi essere in un canale vocale per usare questo comando")
+			if (!interaction.member || !interaction.member.voice.channel) {
+				return interaction.editReply("Devi essere in un canale vocale per usare questo comando");
 			}
 
 			var queue = await client.player.createQueue(interaction.guildId)
