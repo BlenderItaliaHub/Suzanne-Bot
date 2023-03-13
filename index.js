@@ -11,6 +11,7 @@ const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 const { Configuration, OpenAIApi } = require("openai");
 const { Player, QueryType } = require("discord-player");
+const Canvas = require('@napi-rs/canvas');
 
 const configuration = new Configuration({
   apiKey: process.env.API_KEY,
@@ -89,6 +90,22 @@ client.on('interactionCreate', async interaction => {
 	if (interaction.guild === null) console.log(interaction.user.username + " ha usato il comando: " + interaction.commandName + " nei DM")
 	
 	switch (interaction.commandName) {
+		case ('profile'):
+			await interaction.deferReply();
+
+			const canvas = Canvas.createCanvas(700, 250);
+			const context = canvas.getContext('2d');
+			const background = await Canvas.loadImage('https://prd-rteditorial.s3.us-west-2.amazonaws.com/wp-content/uploads/2019/09/06162117/mandalorian-700x250.jpg');
+
+			// This uses the canvas dimensions to stretch the image onto the entire canvas
+			context.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+			// Use the helpful Attachment class structure to process the file for you
+			const attachment = new AttachmentBuilder(await canvas.encode('png'), { name: 'profile-image.png' });
+
+			await interaction.reply({ files: [attachment] });
+			
+			break;
 		case ('play'):
 			await interaction.deferReply();
 			if (!interaction.member || !interaction.member.voice.channel) {
