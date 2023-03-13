@@ -1,10 +1,10 @@
-const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const components = {
     
     fixMenu : new ActionRowBuilder()
 	.addComponents(
-		new SelectMenuBuilder()
+		new StringSelectMenuBuilder()
 			.setCustomId('fixes')
 			.setPlaceholder('Seleziona il problema')
 			.addOptions([

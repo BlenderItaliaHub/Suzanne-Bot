@@ -6,7 +6,7 @@ const { Routes } = require('discord-api-types/v9');
 const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits, InteractionCollector, Embed } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { EmbedBuilder } = require('discord.js');
-const { ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 const { Configuration, OpenAIApi } = require("openai");
@@ -87,7 +87,7 @@ client.player = new Player(client, {
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-	if (interaction.guild === null) console.log(interaction.user.username + " ha usato il comando: " + interaction.commandName + " nei DM")
+	if (interaction.guild === null) console.log(interaction.user.username + " ha usato il comando '" + interaction.commandName + "' nei DM")
 	
 	switch (interaction.commandName) {
 		case ('profile'):
@@ -380,23 +380,6 @@ client.on('interactionCreate', async interaction => {
 				}
 			}
 
-			/*async function asyncCall() {
-				try {
-					response = await openai.createCompletion({
-					model: "text-davinci-003",
-					prompt: interaction.options._hoistedOptions[0].value,
-					max_tokens: 1024,
-					temperature: 0.7,
-					});
-			
-				
-					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ " + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "\n\n" + "```" + response.data.choices[0].text.replace(/```/g, "\n") + "```")] });
-				} catch (error) {
-					console.error(error);
-					var textError = (error.response != undefined ? error.response.data.error.message : error.message);
-					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("⚠ Errore!```\nchatGPT ha generato un errore e al momento non è disponibile, ti preghiamo di riprovare più tardi.```\n```ansi\n[2;36m# Errore:[0m\n[2;33m[2;31m[2;33m[2;35m[2;33m" + textError + "[0m[2;35m[0m[2;33m[0m[2;31m[0m[2;33m[0m\n```")] });
-				}
-			}*/
 			await interaction.deferReply();
 			asyncCall();
 			break;
@@ -420,7 +403,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isSelectMenu()) return;
+	if (!interaction.isStringSelectMenu()) return;
 
 	if (interaction.customId === 'fixes') {
 		
