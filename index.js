@@ -78,11 +78,13 @@ for (const file of commandFiles) {
 
 // MUSIC PLAYER
 client.player = new Player(client, {
+	autoRegisterExtractor: false,
 	ytdlOptions: {
 		quality: "highestaudio",
 		highWaterMark: 1 << 25
 	}
 })
+client.player.extractors.loadDefault();
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -112,8 +114,22 @@ client.on('interactionCreate', async interaction => {
 				return interaction.editReply("Devi essere in un canale vocale per usare questo comando");
 			}
 
-			var queue = await client.player.createQueue(interaction.guildId)
-			if (!queue.connection) await queue.connect(interaction.member.voice.channel)
+			console.log(interaction.member.voice)
+
+			var queue = client.player.nodes.create(interaction.guild, {
+				metadata: {
+				   channel: interaction.member.voice.channel,
+				   client: interaction.guild.members.me,
+				   requestedBy: interaction.user,
+				},
+				selfDeaf: true,
+				volume: 80,
+				leaveOnEmpty: true,
+				leaveOnEmptyCooldown: 300000,
+				leaveOnEnd: true,
+				leaveOnEndCooldown: 300000,
+			});
+			
 
 			let embed = new EmbedBuilder()
 
@@ -127,7 +143,7 @@ client.on('interactionCreate', async interaction => {
 					return interaction.editReply("Nessun risultato")
 				}
 				const song = result.tracks[0];
-				await queue.addTrack(song);
+				await queue.insertTrack(song);
 				embed
 					.setDescription("**[" + song.title + "](" + song.url + ")** è stata aggiunta alla coda")
 					.setThumbnail(song.thumbnail)
@@ -137,13 +153,13 @@ client.on('interactionCreate', async interaction => {
 				let url = interaction.options.getString("link")
 				const result = await client.player.search(url, {
 					requestedBy: interaction.user,
-					searchEngine: QueryType.YOUTUBE_PLAYLIST
+					searchEngine: QueryType.AUTO
 				})
 				if (result.tracks.length === 0) {
 					return interaction.editReply("Nessun risultato")
 				}
 				const playlist = result.playlist;
-				await queue.addTracks(result.tracks);
+				await queue.insertTrack(result.tracks);
 				embed
 					.setDescription("**" + result.tracks.length + "** canzoni da **[" + playlist.title + "](" + playlist.url + ")** sono state aggiunte alla coda")
 					.setThumbnail(result.tracks[0].thumbnail)
@@ -151,7 +167,7 @@ client.on('interactionCreate', async interaction => {
 				
 			}
 
-			if (!queue.playing) await queue.play()
+			if (!queue.playing) queue.node.play()
 			
 			await interaction.editReply({
 				embeds: [embed]

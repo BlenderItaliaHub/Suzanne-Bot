@@ -3,14 +3,15 @@
     "@discordjs/builders": "^0.15.0",
     "@discordjs/opus": "github:discordjs/opus",
     "@discordjs/rest": "^1.0.1",
-    "@discordjs/voice": "^0.10.0",
+    "@discordjs/voice": "^0.15.0",
     "@napi-rs/canvas": "^0.1.38",
     "discord-api-types": "^0.36.3",
-    "discord-player": "^5.4.0",
+    "discord-player": "^6.2.1",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.1",
     "ffmpeg-static": "^5.1.0",
-    "openai": "^3.1.0"
+    "openai": "^3.1.0",
+    "ytdl-core": "^4.11.4"
   },
   "name": "suzanne-bot",
   "version": "1.0.0",
