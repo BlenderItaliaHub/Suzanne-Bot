@@ -118,9 +118,8 @@ const embeds = {
             .setColor('#ff4444')
             .setTitle('Prova ad usare il comando /fix del nostro bot')
             .setDescription(
-                'Ti ricordiamo che il nostro bot **Suzanne** ha dei comandi che **ti potrebbero aiutare a risolvere eventuali problemi su Blender**. Dagli una possibilità.\n\n' +
-                '`/fix` - soluzioni veloci per dei problemi comuni\n' +
-                '`/ask` - chiedi a chatGPT qualsiasi cosa'
+                'Ti ricordiamo che il nostro bot **Suzanne** ha un comando che **ti potrebbe aiutare a risolvere eventuali problemi su Blender**. Dagli una possibilità.\n\n' +
+                '`/ask` - Fai al bot una qualunque domanda'
             )
             .setTimestamp()
             .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
