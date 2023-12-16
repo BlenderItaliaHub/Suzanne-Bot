@@ -9,12 +9,11 @@ const { EmbedBuilder } = require('discord.js');
 const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require("openai");
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+})
 
 const client = new Client({ intents: [ 
 	GatewayIntentBits.DirectMessages,
@@ -54,8 +53,6 @@ const rest = new REST({
 		}
 	})();
 });
-
-
 
 const path = require('path');
 const commandsPath = path.resolve(__dirname, 'commands');
@@ -144,7 +141,7 @@ client.on('interactionCreate', async interaction => {
 			var response;
 			async function asyncCall() {
 				try {
-					response = await openai.createChatCompletion({
+					response = await openai.chat.completions.create({
 					model: "gpt-3.5-turbo",
 					messages: [
 						{role: "system", content: "Ciao, ti chiami Suzanne e sei un assistente digitale molto gentile, solare, anche molto simpatica, ultra professionale e di ultima generazione specifico per il programma Blender e in generale per tutto l'ambito artistico 3D, hai ottime conoscenze teoriche e pratiche di Blender e altri programmi artistici, ti sarà fatta qualche domanda che potrebbe riguardare il programma o altro del mondo 3d e te dovrai rispondere nel modo più accurato e chiaro possibile, inoltre se necessario potrai anche inviare link per delle risorse, video o altri link utili, ma solo nel caso in cui vengano richieste o potrebbero servire. La struttura per l'invio dei link deve essere esattamente questa, anche con le parentesi, prima del link tra parentesi tonde ci deve essere il nome del sito tra parentesi quadre e non ci devono essere spazi tra il testo e il link, eccoti un esempio di come deve essere un link: [**nomesito**](linksito), te devi solo sostituire nomesito con il nome del sito e linksito con il link del sito. Quanto devi scrivere dei pezzi di codice invece scrivili usando il formato che usa Discord per formattare il codice py nei messaggi."},
@@ -155,10 +152,10 @@ client.on('interactionCreate', async interaction => {
 					temperature: 0.7,
 					});
 					var linkRegEx = /https?:\/\/\S+[^\s)]/g;
-					var linkArray = response.data.choices[0].message.content.match(linkRegEx);
+					var linkArray = response.choices[0].message.content.match(linkRegEx);
 					var linkString;
 					if	(linkArray != null) linkString = linkArray.join("\n");
-					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ **" + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "**\n\n" + /*(linkArray != null ? "" : "```") + */response.data.choices[0].message.content/*.replace(/```/g, "\n").replace(linkRegEx, "") + (linkArray != null ? "" : "```") + (linkString != undefined ? linkString : "")*/)] });
+					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ **" + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "**\n\n" + /*(linkArray != null ? "" : "```") + */response.choices[0].message.content/*.replace(/```/g, "\n").replace(linkRegEx, "") + (linkArray != null ? "" : "```") + (linkString != undefined ? linkString : "")*/)] });
 				} catch (error) {
 					console.error(error);
 					var textError = (error.response != undefined ? error.response.data.error.message : error.message);
@@ -260,14 +257,72 @@ client.on('interactionCreate', async interaction => {
 });
 
 var user = [];
+var threadCreated = false;
+var thread;
+var loading = false;
 
 client.on("messageCreate", async (message) => {
+	if (message.author.bot || message.guildId != "816442399039422476") return;
+	if (message.mentions.users.size > 0) {
+		var bot = message.mentions.users.get("993587278322614294");
+		if (bot == "993587278322614294") {
+			if (!threadCreated) {
+				thread = await openai.beta.threads.create();
+				threadCreated = true;
+			}
+			if (!loading) {
+				loading = true;
+				var botReply = await message.reply("*Suzanne sta pensando...*");
 
-	if ((message.author.bot) || (message.channel.parentId != '816443423212830781')) return;
+				var msg = message.content.replace('<@993587278322614294>', "");
+				const userMessage = await openai.beta.threads.messages.create(
+					thread.id,
+					{
+					role: "user",
+					content: msg
+					}
+				);
+				const run = await openai.beta.threads.runs.create(
+					thread.id,
+					{ 
+					assistant_id: "asst_sUW7UeSKwpe4pdEinW0VyC0Y",
+					instructions: "Utente: " + message.author.username
+					}
+				);
+
+				var isCompleted = false;
+				var error = false;
+
+				while (!isCompleted & !error) {
+					var progress = await openai.beta.threads.runs.retrieve(
+						thread.id,
+						run.id
+					);
+					if (progress.status == "failed") {
+						console.log(progress);
+						error = true;
+						loading = false;
+					}
+					if (progress.status == "completed") {
+						loading = false;
+						isCompleted = true;
+					}
+				};
+				if (isCompleted && !error) {
+					const chat = await openai.beta.threads.messages.list(
+						thread.id
+					);
+					await botReply.edit(chat.data[0].content[0].text.value);
+				} else {
+					await botReply.edit("*Suzanne non ha risposto per un errore, riprova tra qualche minuto!*");
+				}
+			}
+		}
+	};
+	if (message.channel.parentId != '816443423212830781') return;
 	if (user.includes(message.author.id)) return;
 	user.push(message.author.id);
-	const hasRole = message.member.roles.cache.some(role => role.name === '🤝 Helper Livello 01');
-	//console.log(message.channel.parentId)
+	const hasRole = message.member.roles.cache.some(role => role.name === '🤝 Helper Novizio');
 	if (!hasRole) {
 		await message.member.roles.add('880437139874148363');
 		await message.reply({ content: 'Ciao ' + message.author.username + '!', embeds: [ embeds.userFix ] });
