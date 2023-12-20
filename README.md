@@ -116,9 +116,12 @@ You can contribute to this project following these steps:
 
 ### Prerequisites
 
-For this project you need NPM and Node
+For this project you need NPM and Node.
+
 npm   --> 9.6.4
+
 node  --> 18.15.0
+
 * npm
   ```sh
   npm install npm@9.6.4 -g
@@ -189,7 +192,7 @@ If you have any suggestions that you think could improve this bot, please create
 
 1. Fork the project 
 2. Create your feature branch (`git checkout -b feature/Miglioramento`)
-3. Commit your changes (`git commit -m 'Aggiungi Miglioramento'`)
+3. Commit your changes (`git commit -m 'Add Miglioramento'`)
 4. Push changes on your branch (`git push origin feature/Miglioramento`)
 5. Open a pull request
 
@@ -240,7 +243,7 @@ Documentation.
 [issues-shield]: https://img.shields.io/github/issues/BlenderItaliaHub/Suzanne-Bot.svg?style=for-the-badge
 [issues-url]: https://github.com/BlenderItaliaHub/Suzanne-Bot/issues
 [license-shield]: https://img.shields.io/github/license/BlenderItaliaHub/Suzanne-Bot.svg?style=for-the-badge
-[license-url]: https://github.com/BlenderItaliaHub/Suzanne-Bot/LICENSE.txt
+[license-url]: https://github.com/BlenderItaliaHub/Suzanne-Bot/blob/main/LICENSE
 [product-screenshot]: images/readme.png
 [Discord.js]: https://img.shields.io/badge/discord.js-5865f2?style=for-the-badge&logo=discord&logoColor=white
 [DiscordJS-url]: https://discord.js.org/

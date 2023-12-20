@@ -312,7 +312,23 @@ client.on("messageCreate", async (message) => {
 					const chat = await openai.beta.threads.messages.list(
 						thread.id
 					);
-					await botReply.edit(chat.data[0].content[0].text.value);
+					var msgFinale = chat.data[0].content[0].text.value;
+
+					if (msgFinale.length >= 1980) {
+						var arrayMessaggi = msgFinale.match(/.{1,1980}/gs) || [];
+						var indexMsg = 0;
+						arrayMessaggi.forEach(messaggio => {
+							if (indexMsg == 0) {
+								botReply.edit(messaggio);
+							} else {
+								message.reply(messaggio);
+							}
+							indexMsg++;
+						});
+					} else {
+						botReply.edit(msgFinale);
+					};
+					
 				} else {
 					await botReply.edit("*Suzanne non ha risposto per un errore, riprova tra qualche minuto!*");
 				}
