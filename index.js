@@ -128,13 +128,12 @@ client.on('interactionCreate', async interaction => {
 			};
 			break;
 
-
-		case ('fix') :
-			await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
-			break;
+		// case ('fix') : // COMANDO DISABILITATO
+		// 	await interaction.reply({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
+		// 	break;
 
 		case ('help') :
-			await interaction.reply({ embeds: [ embeds.helpEmbed ] });
+			await interaction.reply({ embeds: [ embeds.helpEmbed ], components: [ components.btnComandi ] });
 			break;
 
 		case ('ask') : 
@@ -253,6 +252,17 @@ client.on('interactionCreate', async interaction => {
 		await interaction.update({ embeds: [ embeds.fixEmbed ], components: [ components.fixMenu ] });
 	} else if (interaction.customId === 'ok') {
 		await interaction.message.delete();
+	} else if (interaction.customId === 'comandiBot') {
+		var commandsList = '```Suzanne è pensato per essere un bot di supporto agli utenti.\nQua sotto troverai la lista dei comandi disponibili, il bot è aggiornato in modo costante e saranno presenti nuovi comandi prossimamente.\n\n' +
+		'Lista comandi:\n\n' +
+		"/ask			- Sfrutta l'ai per avere risposte a dubbi o domande su qualsiasi cosa. Richiede un prompt che deve essere una o più frasi\n\n" +
+		"/screenshot	- Visualizza un'immagine che raffigura la schermata scelta\n\n" +
+		"/help			- Scopri tutti i dettagli sul bot e sui comandi disponibili\n\n" +
+		"@Suzanne		- Menziona il bot o rispondi ad un suo messaggio per chattare in tempo reale con lui" + 
+		'\xa0\u200B \n\n```'
+		await interaction.update({ embeds: [], content: commandsList, components: [ components.btnHelp ] })
+	} else if (interaction.customId === 'btnHelp') {
+		await interaction.update({ embeds: [ embeds.helpEmbed ], content: "", components: [ components.btnComandi ] });
 	}
 });
 
@@ -285,7 +295,7 @@ client.on("messageCreate", async (message) => {
 				const run = await openai.beta.threads.runs.create(
 					thread.id,
 					{ 
-					assistant_id: "asst_sUW7UeSKwpe4pdEinW0VyC0Y",
+					assistant_id: process.env.ASSISTANT_ID,
 					instructions: "Utente: " + message.author.username
 					}
 				);

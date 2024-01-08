@@ -41,6 +41,24 @@ const components = {
 			])
 	),
 
+	btnComandi : new ActionRowBuilder()
+					.addComponents(
+						new ButtonBuilder()
+						.setCustomId('comandiBot')
+						.setLabel('\xa0\xa0\xa0\xa0\xa0\xa0Comandi')
+						.setStyle(ButtonStyle.Secondary)
+						.setEmoji('🛠')
+					),
+	
+	btnHelp : new ActionRowBuilder()
+					.addComponents(
+						new ButtonBuilder()
+						.setCustomId('btnHelp')
+						.setLabel('\xa0\xa0\xa0\xa0\xa0\xa0Indietro')
+						.setStyle(ButtonStyle.Danger)
+						.setEmoji('🔙')
+					),
+
     btnFix : new ActionRowBuilder()
 				.addComponents(
 					new ButtonBuilder()
