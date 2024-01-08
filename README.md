@@ -82,7 +82,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Product Name Screen Shot][product-screenshot]
 
 Suzanne is a Discord bot created by the Blender Italia Hub team to support users in learning and improving their skills in the 3D software Blender. It is the perfect tool for learning how to use Blender.
 
