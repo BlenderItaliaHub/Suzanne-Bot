@@ -3,7 +3,7 @@ require("dotenv").config();
 const fs = require('fs')
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits, InteractionCollector, Embed } = require('discord.js');
+const { Client, Intents, Collection, Interaction, Message, GatewayIntentBits, InteractionCollector, Embed, ActivityType } = require('discord.js');
 const { channel } = require("diagnostics_channel");
 const { EmbedBuilder } = require('discord.js');
 const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -22,12 +22,24 @@ const client = new Client({ intents: [
 	GatewayIntentBits.GuildMessages,
 	GatewayIntentBits.MessageContent,
 	GatewayIntentBits.GuildPresences,
-	GatewayIntentBits.GuildVoiceStates,
+	GatewayIntentBits.GuildVoiceStates
 ] 
 });
 
 client.once("ready", () =>{
 	console.log("Suzanne Ready!");
+
+	const status = client.user.setPresence({
+		status: "online",
+		activities: [
+			{
+				type: ActivityType.Playing,
+				details: "/help - info e lista comandi",
+				state: "Cancellando il default cube...",
+				name: "Blender"
+			}
+		]
+    });
 
 const CLIENT_ID = client.user.id;
 const rest = new REST({
