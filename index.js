@@ -33,17 +33,11 @@ client.once("ready", () =>{
 		status: "online",
 		activities: [
 			{
-				type: ActivityType.Streaming,
-				details: "Cancellando il default cube...",
-				state: "Blender",
-				name: "Blender",
-				url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUJcmljayByb2xs"
-			},
-			// {
-			// 	type: ActivityType.Custom,
-			// 	name: "customStatus",
-			// 	state: "💻 /help - Lista comandi"
-			// }
+				type: ActivityType.Playing,
+				details: "/help - info e lista comandi",
+				state: "Cancellando il default cube...",
+				name: "Blender"
+			}
 		]
     });
 
