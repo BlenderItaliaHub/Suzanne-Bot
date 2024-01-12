@@ -301,14 +301,13 @@ client.on("messageCreate", async (message) => {
 					thread.id,
 					{
 					role: "user",
-					content: msg
+					content: message.author.username + ":" + msg
 					}
 				);
 				const run = await openai.beta.threads.runs.create(
 					thread.id,
 					{ 
-					assistant_id: process.env.ASSISTANT_ID,
-					instructions: "Utente: " + message.author.username
+						assistant_id: process.env.ASSISTANT_ID
 					}
 				);
 
