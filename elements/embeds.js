@@ -120,7 +120,7 @@ const embeds = {
             .setDescription(
                 'Ti ricordiamo che il nostro bot **Suzanne** ha un comando che **ti potrebbe aiutare a risolvere eventuali problemi su Blender**. Dagli una possibilità.\n\n' +
                 '`/ask` - Fai al bot una qualunque domanda\n' +
-                '`<@993587278322614294>` - Menziona il bot e chatta direttamente con lui\n'
+                '`@Suzanne` - Menziona il bot e chatta direttamente con lui\n'
             )
             .setTimestamp()
             .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
@@ -148,15 +148,6 @@ const embeds = {
             new EmbedBuilder()
             .setColor('#ea7700')
             .setTitle('Comandi - Suzanne')
-            // .setDescription(
-            //     'Suzanne è pensato per essere un bot di supporto agli utenti.\n Qua sotto troverai la lista dei comandi disponibili, il bot è aggiornato in modo costante e saranno presenti nuovi comandi prossimamente.\n\n' +
-            //     '```Lista comandi:\n\n' +
-            //     "/ask                - Sfrutta l'ai per avere risposte a dubbi o domande su qualsiasi cosa. Richiede un prompt che deve essere una o più frasi\n" +
-            //     "/screenshot ...     - Visualizza un'immagine che raffigura la schermata scelta\n" +
-            //     "/help               - Scopri tutti i dettagli sul bot e sui comandi disponibili " +
-            //     "@Suzanne   - Menziona il bot o rispondi ad un suo messaggio per chattare in tempo reale con lui" + 
-            //     '\xa0\u200B \n\n```'
-            // )
             .setThumbnail('https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF')
             .setTimestamp()
             .setFooter({ text: 'Suzanne Bot ', iconURL: 'https://drive.google.com/uc?id=1Bl1G_ja_-ihvfrxvTfbsDCkA226lIRpF'}),
