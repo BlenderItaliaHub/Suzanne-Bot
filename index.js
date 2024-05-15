@@ -150,14 +150,18 @@ client.on('interactionCreate', async interaction => {
 
 		case ('ask') : 
 			var response;
+			var image = interaction.options.getAttachment("image") ? interaction.options.getAttachment("image").url : false;
 			async function asyncCall() {
 				try {
 					response = await openai.chat.completions.create({
-					model: "gpt-3.5-turbo",
+					model: "gpt-4o",
 					messages: [
 						{role: "system", content: "Ciao, ti chiami Suzanne e sei un assistente digitale molto gentile, solare, anche molto simpatica, ultra professionale e di ultima generazione specifico per il programma Blender e in generale per tutto l'ambito artistico 3D, hai ottime conoscenze teoriche e pratiche di Blender e altri programmi artistici, ti sarà fatta qualche domanda che potrebbe riguardare il programma o altro del mondo 3d e te dovrai rispondere nel modo più accurato e chiaro possibile, inoltre se necessario potrai anche inviare link per delle risorse, video o altri link utili, ma solo nel caso in cui vengano richieste o potrebbero servire. La struttura per l'invio dei link deve essere esattamente questa, anche con le parentesi, prima del link tra parentesi tonde ci deve essere il nome del sito tra parentesi quadre e non ci devono essere spazi tra il testo e il link, eccoti un esempio di come deve essere un link: [**nomesito**](linksito), te devi solo sostituire nomesito con il nome del sito e linksito con il link del sito. Quanto devi scrivere dei pezzi di codice invece scrivili usando il formato che usa Discord per formattare il codice py nei messaggi."},
-						{role: "system", content: "I seguenti parametri ti servono solo per avere delle informazioni in più, usali solo se necessario. Nome utente: " + interaction.user.username + ";"},
-						{role: "user", content: interaction.options._hoistedOptions[0].value}
+						{role: "system", content: "I seguenti parametri ti servono solo per avere delle informazioni in più, usali solo se necessario. Nome utente: " + (interaction ? interaction.user.username : "") + ";"}, // Aggiunto controllo per evitare errore se interaction non è definito
+						{role: "user", content: (image ? [
+							{"type": "text", "text": interaction.options.getString("prompt")},
+							{"type": "image_url", "image_url": {"url": image}},
+						] : interaction.options.getString("prompt"))}, 
 					],
 					max_tokens: 1024,
 					temperature: 0.7,
@@ -166,7 +170,9 @@ client.on('interactionCreate', async interaction => {
 					var linkArray = response.choices[0].message.content.match(linkRegEx);
 					var linkString;
 					if	(linkArray != null) linkString = linkArray.join("\n");
-					interaction.editReply({ embeds: [embeds.chatGPT.setDescription("❓ **" + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "**\n\n" + /*(linkArray != null ? "" : "```") + */response.choices[0].message.content/*.replace(/```/g, "\n").replace(linkRegEx, "") + (linkArray != null ? "" : "```") + (linkString != undefined ? linkString : "")*/)] });
+					var chatGPTEmbed = embeds.chatGPT;
+					if (image) chatGPTEmbed.setImage(image);
+					interaction.editReply({ embeds: [chatGPTEmbed.setDescription("❓ **" + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "**\n\n" + response.choices[0].message.content)] });
 				} catch (error) {
 					console.error(error);
 					var textError = (error.response != undefined ? error.response.data.error.message : error.message);
@@ -175,7 +181,18 @@ client.on('interactionCreate', async interaction => {
 			}
 
 			await interaction.deferReply();
-			asyncCall();
+			var tipoGiusto = false;
+			if (image) {
+				tipoGiusto = interaction.options.getAttachment("image").contentType == 'image/png' || interaction.options.getAttachment("image").contentType == 'image/jpg'
+			}
+
+			if (image && tipoGiusto) {
+				asyncCall();
+			} else if (image) {
+				await interaction.editReply("Il formato del file non è supportato, carica un'immagine png o jpg.")
+			} else {
+				asyncCall();
+			}
 			break;
 };
 

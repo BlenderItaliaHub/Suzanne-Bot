@@ -7,7 +7,10 @@ module.exports = {
         .addStringOption(option =>
             option.setName('prompt')
                 .setDescription('Inserisci la domanda')
-                .setRequired(true)),
+                .setRequired(true))
+        .addAttachmentOption(option =>
+            option.setName('image')
+                .setDescription('Inserisci immagine')),
 
     async execute(interaction) {}
 }
