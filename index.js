@@ -27,6 +27,7 @@ const client = new Client({ intents: [
 });
 
 client.once("ready", () =>{
+	console.log("Started")
 	console.log("Suzanne Ready!");
 
 	const status = client.user.setPresence({
@@ -171,7 +172,12 @@ client.on('interactionCreate', async interaction => {
 					var linkString;
 					if	(linkArray != null) linkString = linkArray.join("\n");
 					var chatGPTEmbed = embeds.chatGPT;
-					if (image) chatGPTEmbed.setImage(image);
+					if (image) {
+						chatGPTEmbed.setImage(image);
+					} else {
+						chatGPTEmbed.setImage()
+					}
+
 					interaction.editReply({ embeds: [chatGPTEmbed.setDescription("❓ **" + interaction.options._hoistedOptions[0].value.replace(/```/g, "") + "**\n\n" + response.choices[0].message.content)] });
 				} catch (error) {
 					console.error(error);
@@ -183,7 +189,7 @@ client.on('interactionCreate', async interaction => {
 			await interaction.deferReply();
 			var tipoGiusto = false;
 			if (image) {
-				tipoGiusto = interaction.options.getAttachment("image").contentType == 'image/png' || interaction.options.getAttachment("image").contentType == 'image/jpg'
+				tipoGiusto = interaction.options.getAttachment("image").contentType == 'image/png' || interaction.options.getAttachment("image").contentType == 'image/jpg' || interaction.options.getAttachment("image").contentType == 'image/jpeg'
 			}
 
 			if (image && tipoGiusto) {
