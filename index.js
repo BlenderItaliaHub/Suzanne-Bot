@@ -10,6 +10,7 @@ const { ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } 
 const { embeds } = require('./elements/embeds.js');
 const { components } = require('./elements/components.js');
 const OpenAI = require("openai");
+const cron = require('cron');
 
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
@@ -51,16 +52,41 @@ const rest = new REST({
 	(async () => {
 		try {
 			if (process.env.ENV === "production") {
-			await rest.put(Routes.applicationGuildCommands(CLIENT_ID), {
-				body: commands
-			});
-			console.log("Successfully registred commands globally.");
+				await rest.put(Routes.applicationGuildCommands(CLIENT_ID), {
+					body: commands
+				});
+				console.log("Successfully registred commands globally.");
 			} else {
 				await rest.put(Routes.applicationCommands(CLIENT_ID, process.env.GUILD_ID), {
 					body: commands
 				});
 				console.log("Successfully registred commands locally.");
 			}
+
+			let scheduledMessage = new cron.CronJob('00 47 15 * * *', async () => { // Aggiungi 'async' qui
+				try {
+					var msg;
+			
+					// Questo si esegue ogni giorno alle 10:00:00
+					let channel = client.guilds.cache.get("816442399039422476").channels.cache.get('1297911238705020990');
+					
+					msg = await openai.chat.completions.create({
+						model: "gpt-4o-mini",
+						messages: [
+							{role: "system", content: "Ciao, ti chiami Suzanne e sei un assistente digitale molto gentile, solare, anche molto simpatica, ultra professionale e di ultima generazione specifico per il programma Blender e in generale per tutto l'ambito artistico 3D, hai ottime conoscenze teoriche e pratiche di Blender e altri programmi artistici, ti sarà fatta qualche domanda che potrebbe riguardare il programma o altro del mondo 3d e te dovrai rispondere nel modo più accurato e chiaro possibile, inoltre se necessario potrai anche inviare link per delle risorse, video o altri link utili, ma solo nel caso in cui vengano richieste o potrebbero servire. La struttura per l'invio dei link deve essere esattamente questa, anche con le parentesi, prima del link tra parentesi tonde ci deve essere il nome del sito tra parentesi quadre e non ci devono essere spazi tra il testo e il link, eccoti un esempio di come deve essere un link: [**nomesito**](linksito), te devi solo sostituire nomesito con il nome del sito e linksito con il link del sito. Quanto devi scrivere dei pezzi di codice invece scrivili usando il formato che usa Discord per formattare il codice py nei messaggi."},
+							{role: "system", content: "Scrivimi un tip and trick originale riguardo a Blender, su un qualsiasi aspetto, mantieni la risposta breve, chiara e ben strutturata, limitati a scrivere il tip, non salutare e non ringraziare"},
+						]
+					});
+					
+					await channel.send(msg.choices[0].message.content);
+					console.log("Inviato tip del giorno");
+				} catch (error) {
+					console.error("Errore durante l'invio del messaggio:", error);
+				}
+			}, null, false, "Europe/Rome");
+
+			scheduledMessage.start();
+
 		} catch (err) {
 			if (err) console.log(err);
 		}
@@ -155,9 +181,10 @@ client.on('interactionCreate', async interaction => {
 			async function asyncCall() {
 				try {
 					response = await openai.chat.completions.create({
-					model: "gpt-4o",
+					model: "gpt-4o-mini",
 					messages: [
 						{role: "system", content: "Ciao, ti chiami Suzanne e sei un assistente digitale molto gentile, solare, anche molto simpatica, ultra professionale e di ultima generazione specifico per il programma Blender e in generale per tutto l'ambito artistico 3D, hai ottime conoscenze teoriche e pratiche di Blender e altri programmi artistici, ti sarà fatta qualche domanda che potrebbe riguardare il programma o altro del mondo 3d e te dovrai rispondere nel modo più accurato e chiaro possibile, inoltre se necessario potrai anche inviare link per delle risorse, video o altri link utili, ma solo nel caso in cui vengano richieste o potrebbero servire. La struttura per l'invio dei link deve essere esattamente questa, anche con le parentesi, prima del link tra parentesi tonde ci deve essere il nome del sito tra parentesi quadre e non ci devono essere spazi tra il testo e il link, eccoti un esempio di come deve essere un link: [**nomesito**](linksito), te devi solo sostituire nomesito con il nome del sito e linksito con il link del sito. Quanto devi scrivere dei pezzi di codice invece scrivili usando il formato che usa Discord per formattare il codice py nei messaggi."},
+
 						{role: "system", content: "I seguenti parametri ti servono solo per avere delle informazioni in più, usali solo se necessario. Nome utente: " + (interaction ? interaction.user.username : "") + ";"}, // Aggiunto controllo per evitare errore se interaction non è definito
 						{role: "user", content: (image ? [
 							{"type": "text", "text": interaction.options.getString("prompt")},
