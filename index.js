@@ -16,23 +16,18 @@ const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 })
 
-const client = new Client({ intents: [ 
-	GatewayIntentBits.DirectMessages,
-	GatewayIntentBits.Guilds,
-	GatewayIntentBits.GuildBans,
-	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.MessageContent,
-	GatewayIntentBits.GuildPresences,
-	GatewayIntentBits.GuildVoiceStates
-] 
-});
-
-client.once("ready", () =>{
-	console.log("Started")
-	console.log("Suzanne Ready!");
-
-	const status = client.user.setPresence({
-		status: "online",
+const client = new Client({ 
+	intents: [ 
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildBans,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildPresences,
+		GatewayIntentBits.GuildVoiceStates
+	],
+	presence: {
+        status: "online",
 		activities: [
 			{
 				type: ActivityType.Playing,
@@ -41,7 +36,12 @@ client.once("ready", () =>{
 				name: "Blender"
 			}
 		]
-    });
+    }
+});
+
+client.once("ready", () =>{
+	console.log("Started")
+	console.log("Suzanne Ready!");
 
 const CLIENT_ID = client.user.id;
 const rest = new REST({
@@ -85,7 +85,7 @@ const rest = new REST({
 				}
 			}, null, false, "Europe/Rome");
 
-			scheduledMessage.start();
+			// scheduledMessage.start();
 
 		} catch (err) {
 			if (err) console.log(err);
