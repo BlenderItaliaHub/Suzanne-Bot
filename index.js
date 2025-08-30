@@ -1,4 +1,3 @@
-//https://discordjs.guide/creating-your-bot/#creating-the-main-file
 require("dotenv").config();
 const fs = require('fs')
 const { REST } = require('@discordjs/rest');
@@ -20,7 +19,6 @@ const client = new Client({
 	intents: [ 
 		GatewayIntentBits.DirectMessages,
 		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildBans,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildPresences,
@@ -39,7 +37,7 @@ const client = new Client({
     }
 });
 
-client.once("ready", () =>{
+client.once("clientReady", () =>{
 	console.log("Started")
 	console.log("Suzanne Ready!");
 
